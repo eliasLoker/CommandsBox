@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CommandsBox</string>
+    <string name="app_name_splash">./CommandsBox</string>
+    <string name="cancel">Cancelar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="common_error">Ocurrió un error durante la operación</string>
+    <string name="add_tab">Añadir primera pestaña</string>
+    <string name="add_tab_or_command_title">Añadir pestaña o comando</string>
+    <string name="add_tab_button">Añadir pestaña</string>
+    <string name="add_tab_name_hint">Nombre de la pestaña</string>
+    <string name="add_command_hint">Comando</string>
+    <string name="add_description_hint">Descripción opcional</string>
+    <string name="add_command_button">Añadir comando</string>
+    <string name="add_command_to_tab_title">Añadiendo comando a la pestaña '%1$s'</string>
+    <string name="commands_in_tab_empty">La lista de comandos está vacía</string>
+    <string name="commands_delete_title">Eliminar comando</string>
+    <string name="commands_delete_subtitle">¿Realmente desea eliminar permanentemente el comando '%1$s...'?</string>
+    <string name="tab_edit_title">Editar pestaña</string>
+    <string name="tab_delete_title">Eliminar pestaña</string>
+    <string name="command_copy">¡Comando copiado!</string>
+    <string name="tab_delete_subtitle">¿Realmente desea eliminar permanentemente la pestaña '%1$s'?\n\nTodos los comandos en la pestaña también serán eliminados</string>
+</resources>

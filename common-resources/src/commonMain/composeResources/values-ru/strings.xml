@@ -1,0 +1,27 @@
+<!--
+<resources>
+    <string name="app_name">CommandsBox</string>
+    <string name="app_name_splash">./CommandsBox</string>
+    <string name="cancel">Отмена</string>
+    <string name="edit">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="common_error">Во время операции произошла ошибка</string>
+    <string name="add_tab">Добавить первый таб</string>
+    <string name="add_tab_or_command_title">Добавить таб или команду</string>
+    <string name="add_tab_button">Добавить таб</string>
+    <string name="add_tab_name_hint">Имя таба</string>
+    <string name="add_command_hint">Команда</string>
+    <string name="add_description_hint">Описание по желанию</string>
+    <string name="add_command_button">Добавить команду</string>
+    <string name="add_command_to_tab_title">Добавление команды в таб «%1$s»</string>
+    <string name="commands_in_tab_empty">Список команд пуст</string>
+    <string name="commands_delete_title">Удаление команды</string>
+    <string name="commands_delete_subtitle">Вы действительно хотите удалить безвозвратно команду «%1$s...»?</string>
+    <string name="tab_edit_title">Изменить таб</string>
+    <string name="tab_delete_title">Удаление таба</string>
+    <string name="command_copy">Команда скопирована!</string>
+    <string name="tab_delete_subtitle">Вы действительно хотите удалить безвозвратно таб «%1$s»?\n\nВсе команды в табе будут тоже удалены</string>
+</resources>-->
+<resources>
+
+</resources>

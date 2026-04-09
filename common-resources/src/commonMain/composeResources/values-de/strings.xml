@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CommandsBox</string>
+    <string name="app_name_splash">./CommandsBox</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="delete">Löschen</string>
+    <string name="common_error">Während des Vorgangs ist ein Fehler aufgetreten</string>
+    <string name="add_tab">Ersten Tab hinzufügen</string>
+    <string name="add_tab_or_command_title">Tab oder Befehl hinzufügen</string>
+    <string name="add_tab_button">Tab hinzufügen</string>
+    <string name="add_tab_name_hint">Tab-Name</string>
+    <string name="add_command_hint">Befehl</string>
+    <string name="add_description_hint">Beschreibung optional</string>
+    <string name="add_command_button">Befehl hinzufügen</string>
+    <string name="add_command_to_tab_title">Befehl zum Tab '%1$s' hinzufügen</string>
+    <string name="commands_in_tab_empty">Befehlsliste ist leer</string>
+    <string name="commands_delete_title">Befehl löschen</string>
+    <string name="commands_delete_subtitle">Möchten Sie den Befehl '%1$s...' wirklich unwiderruflich löschen?</string>
+    <string name="tab_edit_title">Tab bearbeiten</string>
+    <string name="tab_delete_title">Tab löschen</string>
+    <string name="command_copy">Befehl kopiert!</string>
+    <string name="tab_delete_subtitle">Möchten Sie den Tab '%1$s' wirklich unwiderruflich löschen?\n\nAlle Befehle im Tab werden ebenfalls gelöscht</string>
+</resources>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CommandsBox</string>
+    <string name="app_name_splash">./CommandsBox</string>
+    <string name="cancel">Annuler</string>
+    <string name="edit">Modifier</string>
+    <string name="delete">Supprimer</string>
+    <string name="common_error">Une erreur est survenue lors de l'opération</string>
+    <string name="add_tab">Ajouter le premier onglet</string>
+    <string name="add_tab_or_command_title">Ajouter un onglet ou une commande</string>
+    <string name="add_tab_button">Ajouter un onglet</string>
+    <string name="add_tab_name_hint">Nom de l'onglet</string>
+    <string name="add_command_hint">Commande</string>
+    <string name="add_description_hint">Description facultative</string>
+    <string name="add_command_button">Ajouter une commande</string>
+    <string name="add_command_to_tab_title">Ajout d'une commande à l'onglet '%1$s'</string>
+    <string name="commands_in_tab_empty">La liste des commandes est vide</string>
+    <string name="commands_delete_title">Suppression de la commande</string>
+    <string name="commands_delete_subtitle">Voulez-vous vraiment supprimer définitivement la commande '%1$s...' ?</string>
+    <string name="tab_edit_title">Modifier l'onglet</string>
+    <string name="tab_delete_title">Suppression de l'onglet</string>
+    <string name="command_copy">Commande copiée !</string>
+    <string name="tab_delete_subtitle">Voulez-vous vraiment supprimer définitivement l'onglet '%1$s' ?\n\nToutes les commandes de l'onglet seront également supprimées</string>
+</resources>

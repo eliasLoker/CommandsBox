@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CommandsBox</string>
+    <string name="app_name_splash">./CommandsBox</string>
+    <string name="cancel">キャンセル</string>
+    <string name="edit">編集</string>
+    <string name="delete">削除</string>
+    <string name="common_error">操作中にエラーが発生しました</string>
+    <string name="add_tab">最初のタブを追加</string>
+    <string name="add_tab_or_command_title">タブまたはコマンドを追加</string>
+    <string name="add_tab_button">タブを追加</string>
+    <string name="add_tab_name_hint">タブ名</string>
+    <string name="add_command_hint">コマンド</string>
+    <string name="add_description_hint">説明（任意）</string>
+    <string name="add_command_button">コマンドを追加</string>
+    <string name="add_command_to_tab_title">タブ「%1$s」にコマンドを追加中</string>
+    <string name="commands_in_tab_empty">コマンドリストが空です</string>
+    <string name="commands_delete_title">コマンドの削除</string>
+    <string name="commands_delete_subtitle">本当にコマンド「%1$s...」を永久に削除しますか？</string>
+    <string name="tab_edit_title">タブを編集</string>
+    <string name="tab_delete_title">タブの削除</string>
+    <string name="command_copy">コマンドをコピーしました！</string>
+    <string name="tab_delete_subtitle">本当にタブ「%1$s」を永久に削除しますか？\n\nタブ内のすべてのコマンドも削除されます</string>
+</resources>

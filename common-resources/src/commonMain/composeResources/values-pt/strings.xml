@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CommandsBox</string>
+    <string name="app_name_splash">./CommandsBox</string>
+    <string name="cancel">Cancelar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Excluir</string>
+    <string name="common_error">Ocorreu um erro durante a operação</string>
+    <string name="add_tab">Adicionar primeira aba</string>
+    <string name="add_tab_or_command_title">Adicionar aba ou comando</string>
+    <string name="add_tab_button">Adicionar aba</string>
+    <string name="add_tab_name_hint">Nome da aba</string>
+    <string name="add_command_hint">Comando</string>
+    <string name="add_description_hint">Descrição opcional</string>
+    <string name="add_command_button">Adicionar comando</string>
+    <string name="add_command_to_tab_title">Adicionando comando à aba '%1$s'</string>
+    <string name="commands_in_tab_empty">A lista de comandos está vazia</string>
+    <string name="commands_delete_title">Excluir comando</string>
+    <string name="commands_delete_subtitle">Você realmente deseja excluir permanentemente o comando '%1$s...'?</string>
+    <string name="tab_edit_title">Editar aba</string>
+    <string name="tab_delete_title">Excluir aba</string>
+    <string name="command_copy">Comando copiado!</string>
+    <string name="tab_delete_subtitle">Você realmente deseja excluir permanentemente a aba '%1$s'?\n\nTodos os comandos na aba também serão excluídos</string>
+</resources>

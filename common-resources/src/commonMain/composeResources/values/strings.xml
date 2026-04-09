@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CommandsBox</string>
+    <string name="app_name_splash">./CommandsBox</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="common_error">An error occurred during the operation</string>
+    <string name="add_tab">Add first tab</string>
+    <string name="add_tab_or_command_title">Add tab or command</string>
+    <string name="add_tab_button">Add tab</string>
+    <string name="add_tab_name_hint">Tab name</string>
+    <string name="add_command_hint">Command</string>
+    <string name="add_description_hint">Optional description</string>
+    <string name="add_command_button">Add command</string>
+    <string name="add_command_to_tab_title">Adding command to tab '%1$s'</string>
+    <string name="commands_in_tab_empty">Command list is empty</string>
+    <string name="commands_delete_title">Delete command</string>
+    <string name="commands_delete_subtitle">Are you sure you want to permanently delete the command '%1$s...'?</string>
+    <string name="tab_edit_title">Edit tab</string>
+    <string name="tab_delete_title">Delete tab</string>
+    <string name="command_copy">Command copied!</string>
+    <string name="tab_delete_subtitle">Are you sure you want to permanently delete the tab '%1$s'?\n\nAll commands in this tab will also be deleted</string>
+</resources>

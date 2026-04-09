@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CommandsBox</string>
+    <string name="app_name_splash">./CommandsBox</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="edit">संपादित करें</string>
+    <string name="delete">मिटाएं</string>
+    <string name="common_error">ऑपरेशन के दौरान एक त्रुटि हुई</string>
+    <string name="add_tab">पहला टैब जोड़ें</string>
+    <string name="add_tab_or_command_title">टैब या कमांड जोड़ें</string>
+    <string name="add_tab_button">टैब जोड़ें</string>
+    <string name="add_tab_name_hint">टैब का नाम</string>
+    <string name="add_command_hint">कमांड</string>
+    <string name="add_description_hint">वैकल्पिक विवरण</string>
+    <string name="add_command_button">कमांड जोड़ें</string>
+    <string name="add_command_to_tab_title">टैब '%1$s' में कमांड जोड़ना</string>
+    <string name="commands_in_tab_empty">कमांड सूची खाली है</string>
+    <string name="commands_delete_title">कमांड हटाना</string>
+    <string name="commands_delete_subtitle">क्या आप वाकई कमांड '%1$s...' को स्थायी रूप से हटाना चाहते हैं?</string>
+    <string name="tab_edit_title">टैб संपादित करें</string>
+    <string name="tab_delete_title">टैब हटाना</string>
+    <string name="command_copy">कमांड कॉपी हो गई!</string>
+    <string name="tab_delete_subtitle">क्या आप वाकई टैब '%1$s' को स्थायी रूप से हटाना चाहते हैं?\n\nटैब के सभी कमांड भी हटा दिए जाएंगे</string>
+</resources>

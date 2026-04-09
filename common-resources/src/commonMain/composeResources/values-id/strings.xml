@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">CommandsBox</string>
+    <string name="app_name_splash">./CommandsBox</string>
+    <string name="cancel">Batal</string>
+    <string name="edit">Ubah</string>
+    <string name="delete">Hapus</string>
+    <string name="common_error">Terjadi kesalahan selama operasi</string>
+    <string name="add_tab">Tambah tab pertama</string>
+    <string name="add_tab_or_command_title">Tambah tab atau perintah</string>
+    <string name="add_tab_button">Tambah tab</string>
+    <string name="add_tab_name_hint">Nama tab</string>
+    <string name="add_command_hint">Perintah</string>
+    <string name="add_description_hint">Deskripsi opsional</string>
+    <string name="add_command_button">Tambah perintah</string>
+    <string name="add_command_to_tab_title">Menambahkan perintah ke tab '%1$s'</string>
+    <string name="commands_in_tab_empty">Daftar perintah kosong</string>
+    <string name="commands_delete_title">Hapus perintah</string>
+    <string name="commands_delete_subtitle">Apakah Anda benar-benar ingin menghapus perintah '%1$s...' secara permanen?</string>
+    <string name="tab_edit_title">Ubah tab</string>
+    <string name="tab_delete_title">Hapus tab</string>
+    <string name="command_copy">Perintah disalin!</string>
+    <string name="tab_delete_subtitle">Apakah Anda benar-benar ingin menghapus tab '%1$s' secara permanen?\n\nSemua perintah di dalam tab ini juga akan dihapus</string>
+</resources>
