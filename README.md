@@ -3,8 +3,8 @@
 **CommandsBox** is an open-source CLI command manager. A lightweight and simple utility for developers who prefer a minimalist approach over bloated tools, providing a dedicated space to store and organize frequently used commands.
 
 <p align="center">
-  <img src="screenshots/1.png" width="400" alt="CommandsBox UI 1">
-  <img src="screenshots/2.png" width="400" alt="CommandsBox UI 2">
+  <img src="screenshots/1.png" height="600" alt="CommandsBox UI 1">
+  <img src="screenshots/2.png" height="600" alt="CommandsBox UI 2">
 </p>
 
 ## ✨ Key Features

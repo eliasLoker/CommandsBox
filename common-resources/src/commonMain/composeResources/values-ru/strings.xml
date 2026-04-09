@@ -1,4 +1,3 @@
-<!--
 <resources>
     <string name="app_name">CommandsBox</string>
     <string name="app_name_splash">./CommandsBox</string>
@@ -21,7 +20,4 @@
     <string name="tab_delete_title">Удаление таба</string>
     <string name="command_copy">Команда скопирована!</string>
     <string name="tab_delete_subtitle">Вы действительно хотите удалить безвозвратно таб «%1$s»?\n\nВсе команды в табе будут тоже удалены</string>
-</resources>-->
-<resources>
-
 </resources>
