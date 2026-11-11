@@ -1,5 +1,5 @@
 ---
-description: Product manager and analyst for WordBox. Conducts discovery, defines requirements, prepares specifications and delegates approved implementation tasks.
+description: Product manager and analyst for CommandsBox. Conducts discovery, defines requirements, prepares specifications and delegates approved implementation tasks.
 mode: primary
 permissions:
   - action: read

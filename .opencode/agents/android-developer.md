@@ -1,5 +1,5 @@
 ---
-description: Senior Kotlin Multiplatform developer. Implements approved WordBox specifications delegated by Product Manager.
+description: Senior Kotlin Multiplatform developer. Implements approved CommandsBox specifications delegated by Product Manager.
 model: openrouter/deepseek/deepseek-v4.1-flash-1017
 mode: all
 permissions:
