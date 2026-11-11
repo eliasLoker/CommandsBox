@@ -15,6 +15,7 @@ kotlin {
             enable = true
         }
     }
+    iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {

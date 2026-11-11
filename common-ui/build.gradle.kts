@@ -14,6 +14,7 @@ kotlin {
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
     }
+    iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {
@@ -31,7 +32,7 @@ kotlin {
                 implementation(libs.koin.compose.viewmodel)
                 implementation(libs.compose.resources)
                 implementation(libs.compose.navigation)
-                implementation(libs.compose.ui.tooling)
+                implementation(libs.compose.ui.tooling.preview)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.compose.resources)
             }

@@ -7,6 +7,7 @@ plugins {
 
 kotlin {
     jvm("desktop")
+    iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {

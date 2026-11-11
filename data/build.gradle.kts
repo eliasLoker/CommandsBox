@@ -13,6 +13,7 @@ kotlin {
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
     }
+    iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {
@@ -37,6 +38,11 @@ kotlin {
 
             }
         }
+        val iosSimulatorArm64Main by getting {
+            dependencies {
+
+            }
+        }
     }
 }
 
@@ -48,4 +54,5 @@ dependencies {
     add("kspCommonMainMetadata", libs.room.compiler)
     add("kspAndroid", libs.room.compiler)
     add("kspJvm", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
 }

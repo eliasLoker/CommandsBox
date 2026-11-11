@@ -25,6 +25,7 @@ dependencyResolutionManagement {
 rootProject.name = "CommandsBox"
 include(":app-android")
 include(":app-desktop")
+include(":app-ios")
 include(":data")
 include(":common-resources")
 include(":common-ui")

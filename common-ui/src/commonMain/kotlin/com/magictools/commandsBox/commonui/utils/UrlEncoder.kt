@@ -1,14 +1,12 @@
 package com.magictools.commandsBox.commonui.utils
 
-import kotlin.text.Charsets.UTF_8
-
 object UrlEncoder {
     private const val allowedChars =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~"
 
     fun encode(input: String): String {
         val sb = StringBuilder()
-        input.toByteArray(UTF_8).forEach { byte ->
+        input.encodeToByteArray().forEach { byte ->
             val ch = byte.toInt().toChar()
             if (allowedChars.contains(ch)) {
                 sb.append(ch)
@@ -33,6 +31,6 @@ object UrlEncoder {
                 i++
             }
         }
-        return bytes.toByteArray().toString(UTF_8)
+        return bytes.toByteArray().decodeToString()
     }
 }

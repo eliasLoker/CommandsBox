@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class MainToastEvents {
 
     private val _event = MutableSharedFlow<ToastState.Data>()
-    private val scope = CoroutineScope(Dispatchers.IO)
+    private val scope = CoroutineScope(Dispatchers.Default)
 
     fun emit(state: ToastState.Data) {
         scope.launch {
