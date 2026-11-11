@@ -14,24 +14,20 @@ fun MainNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = MainDestinations.SPLASH.destinationKey
+        startDestination = MainDestinations.Splash
     ) {
-        composable(
-            route = MainDestinations.SPLASH.destinationKey
-        ) {
+        composable<MainDestinations.Splash> {
             SplashScreen(
                 onTimeOut = {
-                    navController.navigate(MainDestinations.HOME.destinationKey) {
-                        popUpTo(MainDestinations.SPLASH.destinationKey) {
+                    navController.navigate(MainDestinations.Home) {
+                        popUpTo(MainDestinations.Splash) {
                             inclusive = true
                         }
                     }
                 }
             )
         }
-        composable(
-            route = MainDestinations.HOME.destinationKey
-        ) {
+        composable<MainDestinations.Home> {
             HomeScreen()
         }
     }

@@ -1,12 +1,12 @@
 package com.magictools.commandsBox.commonui.navigation
 
-enum class MainDestinations(
-    val destinationKey: String
-) {
-    SPLASH("splash"),
-    HOME("home");
+import kotlinx.serialization.Serializable
 
-    fun getArg() = "${destinationKey}_arg"
-    fun getRoute() = "$destinationKey/{${destinationKey}_arg}"
-    fun getRouteWithArg(argument: String) = "${destinationKey}/$argument"
+sealed interface MainDestinations {
+
+    @Serializable
+    data object Splash : MainDestinations
+
+    @Serializable
+    data object Home : MainDestinations
 }
