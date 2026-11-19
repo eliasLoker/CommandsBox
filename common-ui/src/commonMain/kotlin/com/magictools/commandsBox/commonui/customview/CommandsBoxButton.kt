@@ -2,17 +2,17 @@ package com.magictools.commandsBox.commonui.customview
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.magictools.commandsBox.commonui.theme.AppShapes
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
 import com.magictools.commandsBox.commonui.theme.AppTheme
 
@@ -22,20 +22,19 @@ fun CommandsBoxButton(
     text: String,
     onClick: () -> Unit
 ) {
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .background(color = AppTheme.colors.buttonBackground, shape = RoundedCornerShape(8.dp))
-        .padding(horizontal = 16.dp, vertical = 12.dp)
-        .clickable(
-            indication = null,
-            interactionSource = remember { MutableInteractionSource() },
-            onClick = { onClick() }
-        )
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(AppShapes.small)
+            .background(color = AppTheme.colors.accent, shape = AppShapes.small)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        contentAlignment = Alignment.Center
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = text.uppercase(),
-            style = AppTextTokens.bodyMedium.copy(color = AppTheme.colors.buttonText),
+            style = AppTextTokens.bodyMedium.copy(color = AppTheme.colors.onAccent),
             textAlign = TextAlign.Center,
             maxLines = 1,
         )

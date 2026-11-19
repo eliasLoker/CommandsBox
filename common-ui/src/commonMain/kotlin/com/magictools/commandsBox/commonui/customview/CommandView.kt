@@ -1,27 +1,28 @@
 package com.magictools.commandsBox.commonui.customview
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.magictools.commandsBox.commonui.theme.AppShapes
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
 import com.magictools.commandsBox.commonui.theme.AppTheme
 import com.magictools.commandsBox.commonui.theme.CommandsBoxTheme
@@ -57,6 +59,7 @@ data class CommandState(
 
 @Composable
 fun CommandView(
+    modifier: Modifier = Modifier,
     state: CommandState,
     fontFamily: FontFamily,
     indexInList: Int,
@@ -72,25 +75,34 @@ fun CommandView(
     onDownClicked: (Long) -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
+            .clip(AppShapes.large)
             .background(
                 color = AppTheme.colors.backgroundSecondary,
-                shape = RoundedCornerShape(16.dp)
+                shape = AppShapes.large
             )
-            .padding(horizontal = 16.dp, vertical = 20.dp)
+            .border(
+                width = 1.dp,
+                color = AppTheme.colors.icon.copy(alpha = 0.12f),
+                shape = AppShapes.large
+            )
+            .padding(horizontal = 16.dp, vertical = 16.dp)
     ) {
         when {
             state.isEditMode -> {
-                Box(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        text = stringResource(Res.string.edit),
+                        style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.secondaryText)
+                    )
                     Icon(
                         modifier = Modifier
                             .size(28.dp)
-                            .align(Alignment.TopEnd)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() },
-                                onClick = { onCloseEditClicked(state.id) }
-                            ),
+                            .clickable { onCloseEditClicked(state.id) },
                         imageVector = vectorResource(Res.drawable.ic_clear),
                         contentDescription = null,
                         tint = AppTheme.colors.icon
@@ -121,14 +133,10 @@ fun CommandView(
                     Icon(
                         modifier = Modifier
                             .size(36.dp)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() },
-                                onClick = { onCopyClicked(state.id) }
-                            ),
+                            .clickable { onCopyClicked(state.id) },
                         imageVector = vectorResource(Res.drawable.ic_copy),
                         contentDescription = null,
-                        tint = AppTheme.colors.icon
+                        tint = AppTheme.colors.accent
                     )
                     Column(
                         modifier = Modifier.weight(1f)
@@ -154,95 +162,113 @@ fun CommandView(
                         )
                         Row(
                             modifier = Modifier
-                                .padding(top = 32.dp)
+                                .padding(top = 16.dp)
+                                .fillMaxWidth()
+                                .clip(AppShapes.small)
                                 .background(
                                     color = AppTheme.colors.backgroundMain,
-                                    shape = RoundedCornerShape(4.dp)
-                                )
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
+                                    shape = AppShapes.small
+                                ),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
+                            Box(
                                 modifier = Modifier
                                     .weight(1f)
-                                    .clickable(
-                                        indication = null,
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        onClick = { onEnableEditClicked(state.id) }
+                                    .clickable { onEnableEditClicked(state.id) }
+                                    .padding(vertical = 8.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    text = stringResource(Res.string.edit).uppercase(),
+                                    style = AppTextTokens.bodyMedium.copy(
+                                        color = AppTheme.colors.accentText,
+                                        fontWeight = FontWeight.ExtraBold,
+                                        letterSpacing = 3.sp
                                     ),
-                                text = stringResource(Res.string.edit).uppercase(),
-                                style = AppTextTokens.bodyMedium.copy(
-                                    color = AppTheme.colors.secondaryText,
-                                    fontWeight = FontWeight.ExtraBold,
-                                    letterSpacing = 3.sp
-                                ),
-                                textAlign = TextAlign.Center
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .width(1.dp)
+                                    .height(16.dp)
+                                    .background(color = AppTheme.colors.icon.copy(alpha = 0.2f))
                             )
                             Box(
-                                modifier = Modifier.height(12.dp)
-                                    .width(1.dp)
-                                    .background(color = AppTheme.colors.icon)
-                            )
-                            Text(
                                 modifier = Modifier
-                                    .clickable(
-                                        indication = null,
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        onClick = { onDeleteClicked(state.id) }
-                                    )
-                                    .weight(1f),
-                                text = stringResource(Res.string.delete).uppercase(),
-                                style = AppTextTokens.bodyMedium.copy(
-                                    color = AppTheme.colors.secondaryText,
-                                    fontWeight = FontWeight.ExtraBold,
-                                    letterSpacing = 3.sp
-                                ),
-                                textAlign = TextAlign.Center
-                            )
+                                    .weight(1f)
+                                    .clickable { onDeleteClicked(state.id) }
+                                    .padding(vertical = 8.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    text = stringResource(Res.string.delete).uppercase(),
+                                    style = AppTextTokens.bodyMedium.copy(
+                                        color = AppTheme.colors.destructive,
+                                        fontWeight = FontWeight.ExtraBold,
+                                        letterSpacing = 3.sp
+                                    ),
+                                    textAlign = TextAlign.Center
+                                )
+                            }
                         }
                     }
-                    when {
-                        size == 1 -> {
-                            Spacer(modifier = Modifier.width(36.dp))
+                    Column(
+                        modifier = Modifier.fillMaxHeight()
+                    ) {
+                        val isUpEnabled = indexInList != 0
+                        val isDownEnabled = indexInList != size - 1
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(
+                                    color = AppTheme.colors.backgroundMain,
+                                    shape = CircleShape
+                                )
+                                .alpha(if (isUpEnabled) 1f else 0.3f)
+                                .clickable(
+                                    enabled = isUpEnabled,
+                                    onClick = { onUpClicked(state.id) }
+                                )
+                                .padding(8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                modifier = Modifier.fillMaxSize(),
+                                imageVector = vectorResource(Res.drawable.ic_arrow_up_with_tail),
+                                contentDescription = null,
+                                tint = AppTheme.colors.icon
+                            )
                         }
-                        else -> {
-                            Column(
-                                modifier = Modifier.fillMaxHeight()
-                            ) {
-                                if (indexInList != 0) {
-                                    Icon(
-                                        modifier = Modifier
-                                            .size(36.dp)
-                                            .clickable(
-                                                indication = null,
-                                                interactionSource = remember { MutableInteractionSource() },
-                                                onClick = { onUpClicked(state.id) }
-                                            ),
-                                        imageVector = vectorResource(Res.drawable.ic_arrow_up_with_tail),
-                                        contentDescription = null,
-                                        tint = AppTheme.colors.icon
-                                    )
-                                }
-                                Spacer(modifier = Modifier.weight(1f))
-                                if (indexInList != size - 1) {
-                                    Icon(
-                                        modifier = Modifier
-                                            .padding(top = 8.dp)
-                                            .size(36.dp)
-                                            .rotate(180f)
-                                            .clickable(
-                                                indication = null,
-                                                interactionSource = remember { MutableInteractionSource() },
-                                                onClick = { onDownClicked(state.id) }
-                                            ),
-                                        imageVector = vectorResource(Res.drawable.ic_arrow_up_with_tail),
-                                        contentDescription = null,
-                                        tint = AppTheme.colors.icon
-                                    )
-                                }
-                            }
+                        Spacer(modifier = Modifier.weight(1f))
+                        Box(
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(
+                                    color = AppTheme.colors.backgroundMain,
+                                    shape = CircleShape
+                                )
+                                .alpha(if (isDownEnabled) 1f else 0.3f)
+                                .clickable(
+                                    enabled = isDownEnabled,
+                                    onClick = { onDownClicked(state.id) }
+                                )
+                                .padding(8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .rotate(180f),
+                                imageVector = vectorResource(Res.drawable.ic_arrow_up_with_tail),
+                                contentDescription = null,
+                                tint = AppTheme.colors.icon
+                            )
                         }
                     }
                 }

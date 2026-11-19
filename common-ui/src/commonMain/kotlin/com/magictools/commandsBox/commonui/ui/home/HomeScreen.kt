@@ -1,20 +1,35 @@
 package com.magictools.commandsBox.commonui.ui.home
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,7 +40,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -33,25 +47,34 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.magictools.commandsBox.commonui.customview.AddBannerView
 import com.magictools.commandsBox.commonui.customview.AddBannerViewState
 import com.magictools.commandsBox.commonui.customview.CommandState
 import com.magictools.commandsBox.commonui.customview.CommandView
 import com.magictools.commandsBox.commonui.customview.InputViewState
 import com.magictools.commandsBox.commonui.onDesktopScroll
+import com.magictools.commandsBox.commonui.theme.AppShapes
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
 import com.magictools.commandsBox.commonui.theme.AppTheme
 import com.magictools.commandsBox.commonui.theme.CommandsBoxTheme
@@ -63,6 +86,7 @@ import com.magictools.commandsbox.resources.add_tab_name_hint
 import com.magictools.commandsbox.resources.app_name
 import com.magictools.commandsbox.resources.commands_in_tab_empty
 import com.magictools.commandsbox.resources.commandsbox_logo_transparent
+import com.magictools.commandsbox.resources.ic_add_square
 import com.magictools.commandsbox.resources.ic_arrow_right
 import com.magictools.commandsbox.resources.ic_delete
 import com.magictools.commandsbox.resources.ic_edit
@@ -100,6 +124,12 @@ private fun HomeView(
     val cascadiaFont = FontFamily(Font(Res.font.CascadiaCodeItalic))
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
+
+    val contentSnapshot = remember(state.selectedTabId, state.commands) {
+        HomeContentSnapshot(tabId = state.selectedTabId, commands = state.commands)
+    }
+    val tabSlideDistancePx = with(LocalDensity.current) { 64.dp.roundToPx() }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -115,15 +145,15 @@ private fun HomeView(
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .background(
-                        color = AppTheme.colors.backgroundSecondary,
-                        shape = RoundedCornerShape(
-                            topStart = 0.dp,
-                            topEnd = 0.dp,
-                            bottomStart = 16.dp,
-                            bottomEnd = 16.dp
-                        )
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                AppTheme.colors.accent.copy(alpha = 0.10f),
+                                AppTheme.colors.backgroundSecondary
+                            )
+                        ),
+                        shape = AppShapes.banner
                     )
-                    .padding(vertical = 12.dp)
+                    .padding(vertical = 16.dp)
             ) {
                 Row(
                     modifier = Modifier.wrapContentWidth(),
@@ -134,8 +164,14 @@ private fun HomeView(
                     Box(
                         modifier = Modifier
                             .size(52.dp)
+                            .shadow(elevation = 4.dp, shape = CircleShape)
                             .clip(CircleShape)
                             .background(AppTheme.colors.backgroundMain)
+                            .border(
+                                width = 1.5.dp,
+                                color = AppTheme.colors.accent,
+                                shape = CircleShape
+                            )
                             .padding(4.dp)
                     ) {
                         Image(
@@ -149,7 +185,10 @@ private fun HomeView(
                         modifier = Modifier.padding(start = 16.dp),
                         text = stringResource(Res.string.app_name),
                         fontFamily = cascadiaFont,
-                        style = AppTextTokens.headlineLarge.copy(color = AppTheme.colors.mainText)
+                        style = AppTextTokens.headlineLarge.copy(
+                            color = AppTheme.colors.mainText,
+                            letterSpacing = 0.5.sp
+                        )
                     )
                     Spacer(modifier = Modifier.weight(1f))
                 }
@@ -170,154 +209,242 @@ private fun HomeView(
                                 }
                             )
                             .padding(vertical = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         state.tabs.forEachIndexed { index, tabItem ->
+                            val isSelected = state.selectedTabId == tabItem.id
+                            val pillColor by animateColorAsState(
+                                targetValue = if (isSelected) {
+                                    AppTheme.colors.accent.copy(alpha = 0.15f)
+                                } else {
+                                    Color.Transparent
+                                },
+                                label = "tabPillColor"
+                            )
                             Column(
                                 modifier = Modifier
-                                    .width(IntrinsicSize.Max)
+                                    .clip(AppShapes.medium)
+                                    .background(color = pillColor, shape = AppShapes.medium)
                                     .clickable { onEvent(OnTabSelected(tabItem.id)) }
-                                    .padding(vertical = 12.dp),
+                                    .padding(horizontal = 8.dp, vertical = 8.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Row(
+                                    modifier = Modifier.heightIn(min = 36.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    if (index != 0) {
-                                        Icon(
-                                            modifier = Modifier
-                                                .size(20.dp)
-                                                .rotate(180f)
-                                                .clickable(
-                                                    indication = null,
-                                                    interactionSource = remember { MutableInteractionSource() },
-                                                    onClick = { onEvent(OnTabLeftClicked(tabItem.id)) }
-                                                ),
+                                    AnimatedVisibility(
+                                        visible = isSelected && index != 0,
+                                        enter = fadeIn(
+                                            animationSpec = tween(
+                                                durationMillis = 200,
+                                                delayMillis = 60
+                                            )
+                                        ) + expandHorizontally(
+                                            animationSpec = tween(
+                                                durationMillis = 280,
+                                                delayMillis = 40,
+                                                easing = FastOutSlowInEasing
+                                            ),
+                                            expandFrom = Alignment.End
+                                        ),
+                                        exit = fadeOut(
+                                            animationSpec = tween(durationMillis = 120)
+                                        ) + shrinkHorizontally(
+                                            animationSpec = tween(
+                                                durationMillis = 200,
+                                                easing = FastOutSlowInEasing
+                                            ),
+                                            shrinkTowards = Alignment.End
+                                        )
+                                    ) {
+                                        TabActionIcon(
                                             imageVector = vectorResource(Res.drawable.ic_arrow_right),
-                                            contentDescription = null,
-                                            tint = AppTheme.colors.icon
+                                            tint = AppTheme.colors.accentText,
+                                            rotateDegrees = 180f,
+                                            onClick = { onEvent(OnTabLeftClicked(tabItem.id)) }
                                         )
                                     }
                                     Text(
                                         modifier = Modifier
-                                            .padding(horizontal = 12.dp),
+                                            .padding(horizontal = 8.dp),
                                         text = tabItem.name,
-                                        style = AppTextTokens.headlineMedium.copy(color = AppTheme.colors.mainText),
+                                        style = AppTextTokens.headlineMedium.copy(
+                                            color = if (isSelected) {
+                                                AppTheme.colors.accentText
+                                            } else {
+                                                AppTheme.colors.secondaryText
+                                            }
+                                        ),
                                     )
-                                    Icon(
-                                        modifier = Modifier
-                                            .size(20.dp)
-                                            .clickable(
-                                                indication = null,
-                                                interactionSource = remember { MutableInteractionSource() },
-                                                onClick = { onEvent(OnTabEditClicked(tabItem.id)) }
-                                            ),
-                                        imageVector = vectorResource(Res.drawable.ic_edit),
-                                        contentDescription = null,
-                                        tint = AppTheme.colors.icon
-                                    )
-                                    Spacer(modifier = Modifier.width(12.dp))
-                                    Icon(
-                                        modifier = Modifier
-                                            .size(20.dp)
-                                            .clickable(
-                                                indication = null,
-                                                interactionSource = remember { MutableInteractionSource() },
-                                                onClick = { onEvent(OnDeleteTabClicked(tabItem.id)) }
-                                            ),
-                                        imageVector = vectorResource(Res.drawable.ic_delete),
-                                        contentDescription = null,
-                                        tint = AppTheme.colors.icon
-                                    )
-                                    if (index != state.tabs.size - 1) {
-                                        Spacer(modifier = Modifier.width(12.dp))
-                                        Icon(
-                                            modifier = Modifier
-                                                .size(20.dp)
-                                                .clickable(
-                                                    indication = null,
-                                                    interactionSource = remember { MutableInteractionSource() },
-                                                    onClick = { onEvent(OnTabRightClicked(tabItem.id)) }
-                                                ),
-                                            imageVector = vectorResource(Res.drawable.ic_arrow_right),
-                                            contentDescription = null,
-                                            tint = AppTheme.colors.icon
-                                        )
-                                    }
-                                }
-                                if (state.selectedTabId == tabItem.id) {
-                                    Box(
-                                        modifier = Modifier
-                                            .padding(top = 8.dp)
-                                            .height(4.dp)
-                                            .padding(horizontal = 2.dp)
-                                            .fillMaxWidth()
-                                            .background(
-                                                color = AppTheme.colors.icon,
-                                                shape = CircleShape
+                                    AnimatedVisibility(
+                                        visible = isSelected,
+                                        enter = fadeIn(
+                                            animationSpec = tween(
+                                                durationMillis = 200,
+                                                delayMillis = 60
                                             )
-                                    )
-                                } else {
-                                    Box(
-                                        modifier = Modifier.padding(top = 4.dp).height(3.dp)
-                                            .fillMaxWidth()
-                                    )
+                                        ) + expandHorizontally(
+                                            animationSpec = tween(
+                                                durationMillis = 280,
+                                                delayMillis = 40,
+                                                easing = FastOutSlowInEasing
+                                            ),
+                                            expandFrom = Alignment.Start
+                                        ),
+                                        exit = fadeOut(
+                                            animationSpec = tween(durationMillis = 120)
+                                        ) + shrinkHorizontally(
+                                            animationSpec = tween(
+                                                durationMillis = 200,
+                                                easing = FastOutSlowInEasing
+                                            ),
+                                            shrinkTowards = Alignment.Start
+                                        )
+                                    ) {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            TabActionIcon(
+                                                imageVector = vectorResource(Res.drawable.ic_edit),
+                                                tint = AppTheme.colors.accentText,
+                                                rotateDegrees = 0f,
+                                                onClick = { onEvent(OnTabEditClicked(tabItem.id)) }
+                                            )
+                                            Spacer(modifier = Modifier.width(4.dp))
+                                            TabActionIcon(
+                                                imageVector = vectorResource(Res.drawable.ic_delete),
+                                                tint = AppTheme.colors.accentText,
+                                                rotateDegrees = 0f,
+                                                onClick = { onEvent(OnDeleteTabClicked(tabItem.id)) }
+                                            )
+                                            if (index != state.tabs.size - 1) {
+                                                Spacer(modifier = Modifier.width(4.dp))
+                                                TabActionIcon(
+                                                    imageVector = vectorResource(Res.drawable.ic_arrow_right),
+                                                    tint = AppTheme.colors.accentText,
+                                                    rotateDegrees = 0f,
+                                                    onClick = { onEvent(OnTabRightClicked(tabItem.id)) }
+                                                )
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                item {
-                    AddBannerView(
-                        state = state.addBannerViewState,
-                        onTabQueryChange = { onEvent(OnTabQueryChange(it)) },
-                        onCommandQueryChange = { onEvent(OnCommandQueryChange(it)) },
-                        onDescriptionQueryChange = { onEvent(OnDescriptionQueryChange(it)) },
-                        onExpandIconClicked = { onEvent(OnAddBannerExpandIconClicked) },
-                        onAddTabClicked = { onEvent(OnAddTabClicked) },
-                        onAddCommandClicked = { onEvent(OnAddCommandClicked) }
-                    )
-                }
-                when {
-                    state.commands.isEmpty() -> {
-                        item {
-                            Text(
-                                modifier = Modifier
-                                    .padding(top = 12.dp)
-                                    .padding(horizontal = 12.dp)
-                                    .fillMaxWidth(),
-                                text = stringResource(Res.string.commands_in_tab_empty),
-                                style = AppTextTokens.headlineMedium.copy(color = AppTheme.colors.mainText),
-                                textAlign = TextAlign.Center
-                            )
+            AddBannerView(
+                state = state.addBannerViewState,
+                onTabQueryChange = { onEvent(OnTabQueryChange(it)) },
+                onCommandQueryChange = { onEvent(OnCommandQueryChange(it)) },
+                onDescriptionQueryChange = { onEvent(OnDescriptionQueryChange(it)) },
+                onExpandIconClicked = { onEvent(OnAddBannerExpandIconClicked) },
+                onAddTabClicked = { onEvent(OnAddTabClicked) },
+                onAddCommandClicked = { onEvent(OnAddCommandClicked) }
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            AnimatedContent(
+                targetState = contentSnapshot,
+                contentKey = { it.tabId },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .clipToBounds(),
+                transitionSpec = {
+                    val fromIndex = state.tabs.indexOfFirst { it.id == initialState.tabId }
+                    val toIndex = state.tabs.indexOfFirst { it.id == targetState.tabId }
+                    when {
+                        fromIndex == -1 || toIndex == -1 -> {
+                            EnterTransition.None togetherWith ExitTransition.None
+                        }
+
+                        else -> {
+                            val direction = if (toIndex >= fromIndex) 1 else -1
+                            (
+                                slideInHorizontally(
+                                    animationSpec = tween(
+                                        durationMillis = 300,
+                                        easing = FastOutSlowInEasing
+                                    ),
+                                    initialOffsetX = { direction * tabSlideDistancePx }
+                                ) + fadeIn(animationSpec = tween(durationMillis = 220))
+                            ) togetherWith (
+                                slideOutHorizontally(
+                                    animationSpec = tween(
+                                        durationMillis = 240,
+                                        easing = FastOutSlowInEasing
+                                    ),
+                                    targetOffsetX = { -direction * tabSlideDistancePx }
+                                ) + fadeOut(animationSpec = tween(durationMillis = 160))
+                            ) using SizeTransform(clip = true)
                         }
                     }
+                },
+                label = "homeContent"
+            ) { content ->
+                AnimatedContent(
+                    targetState = content.commands,
+                    contentKey = { it.isEmpty() },
+                    modifier = Modifier.fillMaxSize(),
+                    label = "homeEmptyState"
+                ) { commands ->
+                    when {
+                        commands.isEmpty() -> {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(horizontal = 32.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(56.dp),
+                                        imageVector = vectorResource(Res.drawable.ic_add_square),
+                                        contentDescription = null,
+                                        tint = AppTheme.colors.accent
+                                    )
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    Text(
+                                        text = stringResource(Res.string.commands_in_tab_empty),
+                                        style = AppTextTokens.bodyLarge.copy(color = AppTheme.colors.secondaryText),
+                                        textAlign = TextAlign.Center
+                                    )
+                                }
+                            }
+                        }
 
-                    else -> {
-                        itemsIndexed(state.commands) { index, commandState ->
-                            CommandView(
-                                state = commandState,
-                                fontFamily = cascadiaFont,
-                                indexInList = index,
-                                size = state.commands.size,
-                                onCommandQueryChange = { id, text ->
-                                    onEvent(OnEditCommandQueryChange(id, text))
-                                },
-                                onDescriptionQueryChange = { id, text ->
-                                    onEvent(OnEditDescriptionQueryChange(id, text))
-                                },
-                                onCloseEditClicked = { onEvent(OnEditCloseClicked(it)) },
-                                onEditApplyClicked = { onEvent(OnEditApplyClicked(it)) },
-                                onCopyClicked = { onEvent(OnCopyCommandClicked(it)) },
-                                onEnableEditClicked = { onEvent(OnEnableEditClicked(it)) },
-                                onDeleteClicked = { onEvent(OnDeleteCommandClicked(it)) },
-                                onUpClicked = { onEvent(OnCommandUpClicked(it)) },
-                                onDownClicked = { onEvent(OnCommandDownClicked(it)) }
-                            )
+                        else -> {
+                            LazyColumn(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                itemsIndexed(commands) { index, commandState ->
+                                    CommandView(
+                                        modifier = Modifier.animateItem(),
+                                        state = commandState,
+                                        fontFamily = cascadiaFont,
+                                        indexInList = index,
+                                        size = commands.size,
+                                        onCommandQueryChange = { id, text ->
+                                            onEvent(OnEditCommandQueryChange(id, text))
+                                        },
+                                        onDescriptionQueryChange = { id, text ->
+                                            onEvent(OnEditDescriptionQueryChange(id, text))
+                                        },
+                                        onCloseEditClicked = { onEvent(OnEditCloseClicked(it)) },
+                                        onEditApplyClicked = { onEvent(OnEditApplyClicked(it)) },
+                                        onCopyClicked = { onEvent(OnCopyCommandClicked(it)) },
+                                        onEnableEditClicked = { onEvent(OnEnableEditClicked(it)) },
+                                        onDeleteClicked = { onEvent(OnDeleteCommandClicked(it)) },
+                                        onUpClicked = { onEvent(OnCommandUpClicked(it)) },
+                                        onDownClicked = { onEvent(OnCommandDownClicked(it)) }
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -326,18 +453,33 @@ private fun HomeView(
         if (state.deleteCommandDialogState.isVisible) {
             AlertDialog(
                 onDismissRequest = { onEvent(OnDeleteCommandDialogDismiss) },
-                title = { Text(text = state.deleteCommandDialogState.title) },
+                shape = AppShapes.large,
+                title = {
+                    Text(
+                        text = state.deleteCommandDialogState.title,
+                        style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.mainText)
+                    )
+                },
                 text = {
-                    Text(text = state.deleteCommandDialogState.subtitle)
+                    Text(
+                        text = state.deleteCommandDialogState.subtitle,
+                        style = AppTextTokens.bodyMedium.copy(color = AppTheme.colors.secondaryText)
+                    )
                 },
                 confirmButton = {
                     TextButton(onClick = { onEvent(OnDeleteCommandDialogConfirm) }) {
-                        Text(text = state.deleteCommandDialogState.confirmButton)
+                        Text(
+                            text = state.deleteCommandDialogState.confirmButton,
+                            style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.destructive)
+                        )
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { onEvent(OnDeleteCommandDialogDismiss) }) {
-                        Text(text = state.deleteCommandDialogState.dismissButton)
+                        Text(
+                            text = state.deleteCommandDialogState.dismissButton,
+                            style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.secondaryText)
+                        )
                     }
                 }
             )
@@ -345,7 +487,13 @@ private fun HomeView(
         if (state.editTabDialogState.isVisible) {
             AlertDialog(
                 onDismissRequest = { onEvent(OnTabEditDialogDismiss) },
-                title = { Text(text = state.editTabDialogState.title) },
+                shape = AppShapes.large,
+                title = {
+                    Text(
+                        text = state.editTabDialogState.title,
+                        style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.mainText)
+                    )
+                },
                 text = {
                     OutlinedTextField(
                         value = state.editTabDialogState.initialName,
@@ -356,12 +504,18 @@ private fun HomeView(
                 },
                 confirmButton = {
                     TextButton(onClick = { onEvent(OnTabEditDialogConfirm) }) {
-                        Text(text = state.editTabDialogState.confirmButton)
+                        Text(
+                            text = state.editTabDialogState.confirmButton,
+                            style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.accentText)
+                        )
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { onEvent(OnTabEditDialogDismiss) }) {
-                        Text(text = state.editTabDialogState.dismissButton)
+                        Text(
+                            text = state.editTabDialogState.dismissButton,
+                            style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.secondaryText)
+                        )
                     }
                 }
             )
@@ -369,22 +523,68 @@ private fun HomeView(
         if (state.deleteTabDialogState.isVisible) {
             AlertDialog(
                 onDismissRequest = { onEvent(OnDeleteTabDialogDismiss) },
-                title = { Text(text = state.deleteTabDialogState.title) },
+                shape = AppShapes.large,
+                title = {
+                    Text(
+                        text = state.deleteTabDialogState.title,
+                        style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.mainText)
+                    )
+                },
                 text = {
-                    Text(text = state.deleteTabDialogState.subtitle)
+                    Text(
+                        text = state.deleteTabDialogState.subtitle,
+                        style = AppTextTokens.bodyMedium.copy(color = AppTheme.colors.secondaryText)
+                    )
                 },
                 confirmButton = {
                     TextButton(onClick = { onEvent(OnDeleteTabDialogConfirm) }) {
-                        Text(text = state.deleteTabDialogState.confirmButton)
+                        Text(
+                            text = state.deleteTabDialogState.confirmButton,
+                            style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.destructive)
+                        )
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { onEvent(OnDeleteTabDialogDismiss) }) {
-                        Text(text = state.deleteTabDialogState.dismissButton)
+                        Text(
+                            text = state.deleteTabDialogState.dismissButton,
+                            style = AppTextTokens.headlineSmall.copy(color = AppTheme.colors.secondaryText)
+                        )
                     }
                 }
             )
         }
+    }
+}
+
+private data class HomeContentSnapshot(
+    val tabId: Long,
+    val commands: List<CommandState>
+)
+
+@Composable
+private fun TabActionIcon(
+    imageVector: ImageVector,
+    tint: Color,
+    rotateDegrees: Float,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .size(36.dp)
+            .clip(CircleShape)
+            .background(color = AppTheme.colors.backgroundMain, shape = CircleShape)
+            .clickable(onClick = onClick)
+            .rotate(rotateDegrees)
+            .padding(8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            modifier = Modifier.fillMaxSize(),
+            imageVector = imageVector,
+            contentDescription = null,
+            tint = tint
+        )
     }
 }
 

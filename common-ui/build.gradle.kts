@@ -37,5 +37,11 @@ kotlin {
                 implementation(libs.compose.resources)
             }
         }
+
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.compose.ui.tooling)
+            }
+        }
     }
 }

@@ -10,27 +10,29 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.magictools.commandsBox.commonui.theme.AppShapes
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
 import com.magictools.commandsBox.commonui.theme.AppTheme
 import com.magictools.commandsBox.commonui.theme.CommandsBoxTheme
@@ -72,54 +74,56 @@ fun AddBannerView(
     )
     Column(
         modifier = Modifier.fillMaxWidth()
+            .clip(AppShapes.large)
             .background(
                 color = AppTheme.colors.backgroundSecondary,
-                shape = RoundedCornerShape(16.dp)
+                shape = AppShapes.large
             )
-            .padding(horizontal = 16.dp, vertical = 20.dp)
+            .border(
+                width = 1.dp,
+                color = AppTheme.colors.icon.copy(alpha = 0.12f),
+                shape = AppShapes.large
+            )
+            .padding(horizontal = 16.dp, vertical = 16.dp)
             .animateContentSize(animationSpec = spring(stiffness = Spring.StiffnessLow))
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
+            Box(
                 modifier = Modifier
-                    .size(36.dp)
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() },
-                        onClick = { onExpandIconClicked() }
-                    ),
-                imageVector = vectorResource(Res.drawable.ic_add_square),
-                contentDescription = null,
-                tint = AppTheme.colors.icon
-            )
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(AppTheme.colors.accent.copy(alpha = 0.12f))
+                    .clickable { onExpandIconClicked() }
+                    .padding(4.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    modifier = Modifier.fillMaxSize(),
+                    imageVector = vectorResource(Res.drawable.ic_add_square),
+                    contentDescription = null,
+                    tint = AppTheme.colors.accent
+                )
+            }
             Text(
                 modifier = Modifier.padding(start = 16.dp)
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() },
-                        onClick = { onExpandIconClicked() }
-                    ),
+                    .clickable { onExpandIconClicked() },
                 text = stringResource(
                     when {
                         state.hasTabs -> Res.string.add_tab_or_command_title
                         else -> Res.string.add_tab
                     }
                 ),
-                style = AppTextTokens.bodyLarge.copy(color = AppTheme.colors.mainText)
+                style = AppTextTokens.headlineMedium.copy(color = AppTheme.colors.mainText)
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
                 modifier = Modifier
                     .size(28.dp)
                     .rotate(arrowRotation)
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() },
-                        onClick = { onExpandIconClicked() }
-                    ),
+                    .clickable { onExpandIconClicked() },
                 imageVector = vectorResource(Res.drawable.ic_arrow_up),
                 contentDescription = null,
                 tint = AppTheme.colors.icon
@@ -147,7 +151,7 @@ fun AddBannerView(
                         modifier = Modifier
                             .padding(vertical = 16.dp)
                             .fillMaxWidth()
-                            .background(AppTheme.colors.backgroundMain)
+                            .background(AppTheme.colors.icon.copy(alpha = 0.12f))
                             .height(1.dp)
                     )
                     Text(

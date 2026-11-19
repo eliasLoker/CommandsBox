@@ -15,7 +15,11 @@ data class AppColors(
     val buttonText: Color,
     val icon: Color,
     val toastSuccess: Color,
-    val toastFailure: Color
+    val toastFailure: Color,
+    val accent: Color,
+    val accentText: Color,
+    val onAccent: Color,
+    val destructive: Color
 )
 
 val lightColors = AppColors(
@@ -28,6 +32,10 @@ val lightColors = AppColors(
     icon = Color(0xFF000000),
     toastSuccess = Color(0xFF6EFD90),
     toastFailure = Color(0xFFFD7474),
+    accent = Color(0xFF16A34A),
+    accentText = Color(0xFF166534),
+    onAccent = Color(0xFF000000),
+    destructive = Color(0xFFB91C1C),
 )
 
 val darkColors = AppColors(
@@ -40,6 +48,10 @@ val darkColors = AppColors(
     icon = Color(0xFFBABABA),
     toastSuccess = Color(0xFF246319),
     toastFailure = Color(0xFF631919),
+    accent = Color(0xFF4ADE80),
+    accentText = Color(0xFF4ADE80),
+    onAccent = Color(0xFF000000),
+    destructive = Color(0xFFF87171),
 )
 
 val LocalAppColors = staticCompositionLocalOf { lightColors }
