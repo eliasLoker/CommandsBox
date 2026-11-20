@@ -22,9 +22,9 @@ commitment to ship on the App Store.
 ## ✨ Key Features
 
 * **Kotlin Multiplatform:** Built from the ground up using **KMP**.
-* **Shared UI:** Almost 100% shared UI code across all platforms with minimal platform-specific adjustments.
-* **Multi-Platform Support:** Grouped by platform family — **Mobile** (Android and iOS Simulator) via `:app-android` and `:app-ios`, and **Desktop** (Windows and Linux) via `:app-desktop`.
-* **Localization:** Supports 10 languages (English, German, French, Spanish, Indonesian, Hindi, Japanese, Korean, Brazilian Portuguese, and Russian) using **JetBrains Compose resources**.
+* **Shared UI:** Android, Desktop, and the Compose-based iOS app share almost 100% of their UI code through **Compose Multiplatform**. The separate SwiftUI iOS app (`:app-ios-native`) has native screens and reuses the shared ViewModels instead.
+* **Multi-Platform Support:** Grouped by platform family — **Mobile** via `:app-android` on Android and `:app-ios` (Compose UI) and `:app-ios-native` (SwiftUI UI) on the iOS Simulator, and **Desktop** (Windows and Linux) via `:app-desktop`.
+* **Localization:** Supports 10 languages (English, German, French, Spanish, Indonesian, Hindi, Japanese, Korean, Brazilian Portuguese, and Russian). The Compose UI and shared ViewModel text use **JetBrains Compose resources**; the native SwiftUI app (`:app-ios-native`) uses **Moko Resources** for its labels and assets. Both are sourced from `:common-resources` (Moko inputs are generated from the shared resources).
 * **Cross-Platform Database:** **Room** implementation that works on Android, Desktop, and the iOS Simulator.
 
 ## 📦 Modules
@@ -33,7 +33,8 @@ commitment to ship on the App Store.
 | --- | --- |
 | `:app-android` | Android application entry point. |
 | `:app-desktop` | Desktop (JVM) application entry point and native packaging. |
-| `:app-ios` | iOS entry point, Compose framework, and the Xcode host project. |
+| `:app-ios` | Compose iOS entry point, Compose framework, and the Xcode host project. |
+| `:app-ios-native` | Native SwiftUI iOS entry point, Kotlin ViewModel bridge in `:common-ui`, Moko resources generated from `:common-resources`, and the `CommandsBoxNative` Xcode host project. Does not host Compose UI. |
 | `:common-ui` | Shared Compose UI, navigation, ViewModels, and UI dependency injection. |
 | `:data` | Repositories and Room persistence, with platform-specific database setup. |
 | `:common-resources` | Shared Compose resources and localized strings. |
@@ -43,7 +44,9 @@ commitment to ship on the App Store.
 
 * **JDK 21** — the Gradle modules use `jvmToolchain(21)`.
 * **Android SDK** matching `compileSdk` / `targetSdk` from `gradle/libs.versions.toml`.
-* **macOS with Xcode** for the iOS target. The native host project lives in `app-ios/iosApp/`.
+* **macOS with Xcode** for the iOS targets. The Compose host project lives in
+  `app-ios/iosApp/`, and the native SwiftUI host project lives in
+  `app-ios-native/iosApp/`.
 
 ## 🚀 Running the app
 
@@ -73,14 +76,39 @@ through Gradle, so no separate Gradle step is needed. See
 [`app-ios/README.md`](app-ios/README.md) for requirements, verification details,
 and known limitations.
 
+**iOS native SwiftUI app (Apple Silicon Simulator)**
+
+1. Open `app-ios-native/iosApp/CommandsBoxNative.xcodeproj` in Xcode.
+2. Select the `CommandsBoxNative` scheme and an Apple Silicon iPhone Simulator.
+3. Press **Run**.
+
+Its "Run Script" phase embeds and signs the static `NativeApp` framework through
+`:app-ios-native:embedAndSignAppleFrameworkForXcode`; a `Copy Moko Resources`
+phase packages the generated resource bundle. See
+[`app-ios-native/README.md`](app-ios-native/README.md) for build, run, UI-test,
+localization, and resource details.
+
 ## 🍎 iOS status
 
-* Target: `iosSimulatorArm64` only (Apple Silicon Simulator, deployment target
-  iOS 15.0). `iosX64` is not configured.
-* The app reuses the shared Compose UI, navigation, ViewModels, MVI, repository,
-  and Room schema; there is no separate SwiftUI implementation.
-* Platform implementations provided for iOS: Room database in the app sandbox,
-  clipboard access, and Koin wiring.
+* Two separate iOS Simulator apps are configured. Both target
+  `iosSimulatorArm64` only (Apple Silicon Simulator, deployment target iOS 15.0);
+  `iosX64` is not configured.
+* `:app-ios` — Compose Multiplatform UI with shared navigation and ViewModels.
+  Xcode project: `app-ios/iosApp/iosApp.xcodeproj`, scheme `iosApp`, static
+  framework `ComposeApp`.
+* `:app-ios-native` — native SwiftUI screens that reuse the Main, Home, and
+  Settings ViewModels from `:common-ui` through the iOS native bridge. It does
+  not host Compose UI. Xcode project:
+  `app-ios-native/iosApp/CommandsBoxNative.xcodeproj`, scheme
+  `CommandsBoxNative`, static framework `NativeApp`. See
+  [`app-ios-native/README.md`](app-ios-native/README.md).
+* Both apps use the shared `:data` repositories, Room schema, MVI helpers, and
+  the iOS platform implementations that are available (Room database in the app
+  sandbox, clipboard access, and Koin wiring).
+* Localization and assets: the Compose app uses Compose Resources. Moko Resources
+  is configured only for `:app-ios-native`, with generated inputs derived from
+  the same `:common-resources` strings, images, and fonts; text produced by the
+  shared ViewModels still uses the Compose Resources string provider.
 * Not configured: physical iPhone, release builds, and distribution signing /
   provisioning.
 

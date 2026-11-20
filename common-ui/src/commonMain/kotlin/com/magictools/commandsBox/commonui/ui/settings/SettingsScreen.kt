@@ -182,13 +182,13 @@ private fun SettingsIconButton(
     }
 }
 
-internal sealed interface SettingsAction : ViewAction {
+sealed interface SettingsAction : ViewAction {
     data object NavigateBack : SettingsAction
 }
 
-internal sealed interface SettingsEvent : ViewEvent
-internal data object OnBackClicked : SettingsEvent
-internal class OnThemeChanged(val isDark: Boolean) : SettingsEvent
+sealed interface SettingsEvent : ViewEvent
+data object OnBackClicked : SettingsEvent
+class OnThemeChanged(val isDark: Boolean) : SettingsEvent
 
 @Composable
 @Preview(widthDp = 411, heightDp = 800)

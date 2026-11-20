@@ -5,7 +5,7 @@ import com.magictools.multimvi.state.ViewState
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class SettingsViewState(
+data class SettingsViewState(
     val isLoading: Boolean = false,
     val selectedTheme: ThemePreference? = null
 ) : ViewState

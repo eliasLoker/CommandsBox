@@ -6,7 +6,7 @@ import com.magictools.multimvi.state.ViewState
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class HomeViewState(
+data class HomeViewState(
     val tabs: List<HomeTab> = emptyList(),
     val addBannerViewState: AddBannerViewState = AddBannerViewState(),
     val commands: List<CommandState> = emptyList(),

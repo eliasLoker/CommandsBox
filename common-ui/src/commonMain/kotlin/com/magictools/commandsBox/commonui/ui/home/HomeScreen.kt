@@ -608,37 +608,37 @@ private fun TabActionIcon(
     }
 }
 
-internal sealed interface HomeAction : ViewAction
+sealed interface HomeAction : ViewAction
 
-internal sealed interface HomeEvent : ViewEvent
-internal class OnTabSelected(val tabId: Long) : HomeEvent
-internal data object OnAddBannerExpandIconClicked : HomeEvent
-internal data object OnAddTabClicked : HomeEvent
-internal data object OnAddCommandClicked : HomeEvent
-internal class OnTabQueryChange(val text: String) : HomeEvent
-internal class OnCommandQueryChange(val text: String) : HomeEvent
-internal class OnDescriptionQueryChange(val text: String) : HomeEvent
+sealed interface HomeEvent : ViewEvent
+class OnTabSelected(val tabId: Long) : HomeEvent
+data object OnAddBannerExpandIconClicked : HomeEvent
+data object OnAddTabClicked : HomeEvent
+data object OnAddCommandClicked : HomeEvent
+class OnTabQueryChange(val text: String) : HomeEvent
+class OnCommandQueryChange(val text: String) : HomeEvent
+class OnDescriptionQueryChange(val text: String) : HomeEvent
 
-internal class OnEditCommandQueryChange(val id: Long, val text: String) : HomeEvent
-internal class OnEditDescriptionQueryChange(val id: Long, val text: String) : HomeEvent
-internal class OnEditCloseClicked(val id: Long) : HomeEvent
-internal class OnEditApplyClicked(val id: Long) : HomeEvent
-internal class OnCopyCommandClicked(val id: Long) : HomeEvent
-internal class OnCommandUpClicked(val id: Long) : HomeEvent
-internal class OnCommandDownClicked(val id: Long) : HomeEvent
-internal class OnEnableEditClicked(val id: Long) : HomeEvent
-internal class OnDeleteCommandClicked(val id: Long) : HomeEvent
-internal data object OnDeleteCommandDialogDismiss : HomeEvent
-internal data object OnDeleteCommandDialogConfirm : HomeEvent
-internal class OnTabLeftClicked(val id: Long) : HomeEvent
-internal class OnTabRightClicked(val id: Long) : HomeEvent
-internal class OnTabEditClicked(val id: Long) : HomeEvent
-internal data object OnTabEditDialogDismiss : HomeEvent
-internal data object OnTabEditDialogConfirm : HomeEvent
-internal class OnTabEditDialogTextChanged(val text: String) : HomeEvent
-internal class OnDeleteTabClicked(val id: Long) : HomeEvent
-internal data object OnDeleteTabDialogDismiss : HomeEvent
-internal data object OnDeleteTabDialogConfirm : HomeEvent
+class OnEditCommandQueryChange(val id: Long, val text: String) : HomeEvent
+class OnEditDescriptionQueryChange(val id: Long, val text: String) : HomeEvent
+class OnEditCloseClicked(val id: Long) : HomeEvent
+class OnEditApplyClicked(val id: Long) : HomeEvent
+class OnCopyCommandClicked(val id: Long) : HomeEvent
+class OnCommandUpClicked(val id: Long) : HomeEvent
+class OnCommandDownClicked(val id: Long) : HomeEvent
+class OnEnableEditClicked(val id: Long) : HomeEvent
+class OnDeleteCommandClicked(val id: Long) : HomeEvent
+data object OnDeleteCommandDialogDismiss : HomeEvent
+data object OnDeleteCommandDialogConfirm : HomeEvent
+class OnTabLeftClicked(val id: Long) : HomeEvent
+class OnTabRightClicked(val id: Long) : HomeEvent
+class OnTabEditClicked(val id: Long) : HomeEvent
+data object OnTabEditDialogDismiss : HomeEvent
+data object OnTabEditDialogConfirm : HomeEvent
+class OnTabEditDialogTextChanged(val text: String) : HomeEvent
+class OnDeleteTabClicked(val id: Long) : HomeEvent
+data object OnDeleteTabDialogDismiss : HomeEvent
+data object OnDeleteTabDialogConfirm : HomeEvent
 
 @Composable
 @Preview(widthDp = 411, heightDp = 800)

@@ -11,7 +11,7 @@ import com.magictools.multimvi.event.listen
 import com.magictools.multimvi.state.viewState
 import kotlinx.coroutines.launch
 
-internal class SettingsViewModel(
+class SettingsViewModel(
     savedStateHandle: SavedStateHandle,
     private val themePreferences: ThemePreferences
 ) : ViewModel() {

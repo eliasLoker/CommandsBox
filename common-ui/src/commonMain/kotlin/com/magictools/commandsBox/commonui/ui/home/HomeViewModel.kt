@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
-internal class HomeViewModel(
+class HomeViewModel(
     savedStateHandle: SavedStateHandle,
     private val stringProvider: StringProvider,
     private val mainRepository: MainRepository,
