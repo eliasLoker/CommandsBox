@@ -20,4 +20,10 @@
     <string name="tab_delete_title">Eliminar pestaña</string>
     <string name="command_copy">¡Comando copiado!</string>
     <string name="tab_delete_subtitle">¿Realmente desea eliminar permanentemente la pestaña '%1$s'?\n\nTodos los comandos en la pestaña también serán eliminados</string>
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_back">Atrás</string>
+    <string name="settings_dark_theme">Tema oscuro</string>
+    <string name="settings_theme_light">Claro</string>
+    <string name="settings_theme_dark">Oscuro</string>
+    <string name="settings_theme_current">Tema actual: %1$s</string>
 </resources>

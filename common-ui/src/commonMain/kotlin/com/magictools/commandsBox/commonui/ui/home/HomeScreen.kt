@@ -35,7 +35,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
@@ -90,6 +89,8 @@ import com.magictools.commandsbox.resources.ic_add_square
 import com.magictools.commandsbox.resources.ic_arrow_right
 import com.magictools.commandsbox.resources.ic_delete
 import com.magictools.commandsbox.resources.ic_edit
+import com.magictools.commandsbox.resources.ic_settings
+import com.magictools.commandsbox.resources.settings_title
 import com.magictools.multimvi.action.ViewAction
 import com.magictools.multimvi.collectActions
 import com.magictools.multimvi.event.ViewEvent
@@ -101,7 +102,9 @@ import org.jetbrains.compose.resources.vectorResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-internal fun HomeScreen() {
+internal fun HomeScreen(
+    onSettingsClicked: () -> Unit
+) {
     val viewModel = koinViewModel<HomeViewModel>()
     val state = viewModel.viewState.collectAsState()
     viewModel.action.collectActions<HomeAction>(
@@ -112,13 +115,18 @@ internal fun HomeScreen() {
 
         }
     )
-    HomeView(state.value, viewModel.onNewEvent)
+    HomeView(
+        state = state.value,
+        onSettingsClicked = onSettingsClicked,
+        onEvent = viewModel.onNewEvent
+    )
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun HomeView(
     state: HomeViewState,
+    onSettingsClicked: () -> Unit,
     onEvent: (HomeEvent) -> Unit
 ) {
     val cascadiaFont = FontFamily(Font(Res.font.CascadiaCodeItalic))
@@ -155,42 +163,52 @@ private fun HomeView(
                     )
                     .padding(vertical = 16.dp)
             ) {
-                Row(
-                    modifier = Modifier.wrapContentWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 16.dp)
                 ) {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Box(
-                        modifier = Modifier
-                            .size(52.dp)
-                            .shadow(elevation = 4.dp, shape = CircleShape)
-                            .clip(CircleShape)
-                            .background(AppTheme.colors.backgroundMain)
-                            .border(
-                                width = 1.5.dp,
-                                color = AppTheme.colors.accent,
-                                shape = CircleShape
-                            )
-                            .padding(4.dp)
+                    Row(
+                        modifier = Modifier.align(Alignment.CenterStart),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(Res.drawable.commandsbox_logo_transparent),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
+                        Box(
+                            modifier = Modifier
+                                .size(52.dp)
+                                .shadow(elevation = 4.dp, shape = CircleShape)
+                                .clip(CircleShape)
+                                .background(AppTheme.colors.backgroundMain)
+                                .border(
+                                    width = 1.5.dp,
+                                    color = AppTheme.colors.accent,
+                                    shape = CircleShape
+                                )
+                                .padding(4.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(Res.drawable.commandsbox_logo_transparent),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                        Text(
+                            modifier = Modifier.padding(start = 16.dp),
+                            text = stringResource(Res.string.app_name),
+                            fontFamily = cascadiaFont,
+                            style = AppTextTokens.headlineLarge.copy(
+                                color = AppTheme.colors.mainText,
+                                letterSpacing = 0.5.sp
+                            )
                         )
                     }
-                    Text(
-                        modifier = Modifier.padding(start = 16.dp),
-                        text = stringResource(Res.string.app_name),
-                        fontFamily = cascadiaFont,
-                        style = AppTextTokens.headlineLarge.copy(
-                            color = AppTheme.colors.mainText,
-                            letterSpacing = 0.5.sp
-                        )
+                    TabActionIcon(
+                        modifier = Modifier.align(Alignment.CenterEnd),
+                        imageVector = vectorResource(Res.drawable.ic_settings),
+                        tint = AppTheme.colors.accentText,
+                        rotateDegrees = 0f,
+                        contentDescription = stringResource(Res.string.settings_title),
+                        onClick = onSettingsClicked
                     )
-                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
             when {
@@ -564,13 +582,15 @@ private data class HomeContentSnapshot(
 
 @Composable
 private fun TabActionIcon(
+    modifier: Modifier = Modifier,
     imageVector: ImageVector,
     tint: Color,
     rotateDegrees: Float,
+    contentDescription: String? = null,
     onClick: () -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(36.dp)
             .clip(CircleShape)
             .background(color = AppTheme.colors.backgroundMain, shape = CircleShape)
@@ -582,7 +602,7 @@ private fun TabActionIcon(
         Icon(
             modifier = Modifier.fillMaxSize(),
             imageVector = imageVector,
-            contentDescription = null,
+            contentDescription = contentDescription,
             tint = tint
         )
     }
@@ -704,7 +724,8 @@ private fun SplashScreen_Preview() {
                     )
                 }
             ),
-            {}
+            onSettingsClicked = {},
+            onEvent = {}
         )
     }
 }

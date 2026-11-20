@@ -20,4 +20,10 @@
     <string name="tab_delete_title">टैब हटाना</string>
     <string name="command_copy">कमांड कॉपी हो गई!</string>
     <string name="tab_delete_subtitle">क्या आप वाकई टैब '%1$s' को स्थायी रूप से हटाना चाहते हैं?\n\nटैब के सभी कमांड भी हटा दिए जाएंगे</string>
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="settings_back">वापस</string>
+    <string name="settings_dark_theme">डार्क थीम</string>
+    <string name="settings_theme_light">लाइट</string>
+    <string name="settings_theme_dark">डार्क</string>
+    <string name="settings_theme_current">वर्तमान थीम: %1$s</string>
 </resources>

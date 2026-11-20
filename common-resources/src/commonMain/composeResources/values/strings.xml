@@ -20,4 +20,10 @@
     <string name="tab_delete_title">Delete tab</string>
     <string name="command_copy">Command copied!</string>
     <string name="tab_delete_subtitle">Are you sure you want to permanently delete the tab '%1$s'?\n\nAll commands in this tab will also be deleted</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_back">Back</string>
+    <string name="settings_dark_theme">Dark theme</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_current">Current theme: %1$s</string>
 </resources>

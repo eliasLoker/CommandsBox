@@ -20,4 +20,10 @@
     <string name="tab_delete_title">Excluir aba</string>
     <string name="command_copy">Comando copiado!</string>
     <string name="tab_delete_subtitle">Você realmente deseja excluir permanentemente a aba '%1$s'?\n\nTodos os comandos na aba também serão excluídos</string>
+    <string name="settings_title">Configurações</string>
+    <string name="settings_back">Voltar</string>
+    <string name="settings_dark_theme">Tema escuro</string>
+    <string name="settings_theme_light">Claro</string>
+    <string name="settings_theme_dark">Escuro</string>
+    <string name="settings_theme_current">Tema atual: %1$s</string>
 </resources>

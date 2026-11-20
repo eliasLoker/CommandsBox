@@ -20,4 +20,10 @@
     <string name="tab_delete_title">Suppression de l'onglet</string>
     <string name="command_copy">Commande copiée !</string>
     <string name="tab_delete_subtitle">Voulez-vous vraiment supprimer définitivement l'onglet '%1$s' ?\n\nToutes les commandes de l'onglet seront également supprimées</string>
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_back">Retour</string>
+    <string name="settings_dark_theme">Thème sombre</string>
+    <string name="settings_theme_light">Clair</string>
+    <string name="settings_theme_dark">Sombre</string>
+    <string name="settings_theme_current">Thème actuel : %1$s</string>
 </resources>

@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.magictools.commandsBox.commonui.customview.CommandsBoxToastView
 import com.magictools.commandsBox.commonui.navigation.MainNavHost
-import com.magictools.commandsBox.commonui.theme.CommandsBoxTheme
+import com.magictools.commandsBox.commonui.theme.CommandsBoxAppTheme
 import com.magictools.commandsBox.commonui.ui.main.MainViewModel
 import com.magictools.commandsBox.commonui.ui.main.OnToastDismissed
 import com.magictools.commandsBox.commonui.utils.DispatcherProvider
@@ -21,7 +21,7 @@ fun MainViewController(): UIViewController {
     startIosKoin()
     return ComposeUIViewController {
         val viewModel: MainViewModel = koinViewModel()
-        CommandsBoxTheme {
+        CommandsBoxAppTheme {
             val viewState = viewModel.viewState.collectAsState().value
             Box(modifier = Modifier.fillMaxSize()) {
                 MainNavHost()

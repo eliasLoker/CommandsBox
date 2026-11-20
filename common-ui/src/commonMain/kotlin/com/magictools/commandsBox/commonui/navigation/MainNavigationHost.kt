@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.magictools.commandsBox.commonui.ui.home.HomeScreen
+import com.magictools.commandsBox.commonui.ui.settings.SettingsArgument
+import com.magictools.commandsBox.commonui.ui.settings.SettingsScreen
 import com.magictools.commandsBox.commonui.ui.splash.SplashScreen
 
 @Composable
@@ -28,7 +30,19 @@ fun MainNavHost(
             )
         }
         composable<MainDestinations.Home> {
-            HomeScreen()
+            HomeScreen(
+                onSettingsClicked = {
+                    navController.navigate(MainDestinations.Settings)
+                }
+            )
+        }
+        composable<MainDestinations.Settings> {
+            SettingsScreen(
+                argument = SettingsArgument,
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

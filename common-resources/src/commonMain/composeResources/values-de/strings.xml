@@ -20,4 +20,10 @@
     <string name="tab_delete_title">Tab löschen</string>
     <string name="command_copy">Befehl kopiert!</string>
     <string name="tab_delete_subtitle">Möchten Sie den Tab '%1$s' wirklich unwiderruflich löschen?\n\nAlle Befehle im Tab werden ebenfalls gelöscht</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_back">Zurück</string>
+    <string name="settings_dark_theme">Dunkles Design</string>
+    <string name="settings_theme_light">Hell</string>
+    <string name="settings_theme_dark">Dunkel</string>
+    <string name="settings_theme_current">Aktuelles Design: %1$s</string>
 </resources>

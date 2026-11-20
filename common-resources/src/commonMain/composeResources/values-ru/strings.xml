@@ -20,4 +20,10 @@
     <string name="tab_delete_title">Удаление таба</string>
     <string name="command_copy">Команда скопирована!</string>
     <string name="tab_delete_subtitle">Вы действительно хотите удалить безвозвратно таб «%1$s»?\n\nВсе команды в табе будут тоже удалены</string>
+    <string name="settings_title">Настройки</string>
+    <string name="settings_back">Назад</string>
+    <string name="settings_dark_theme">Тёмная тема</string>
+    <string name="settings_theme_light">Светлая</string>
+    <string name="settings_theme_dark">Тёмная</string>
+    <string name="settings_theme_current">Текущая тема: %1$s</string>
 </resources>

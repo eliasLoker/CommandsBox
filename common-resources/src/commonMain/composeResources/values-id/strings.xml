@@ -20,4 +20,10 @@
     <string name="tab_delete_title">Hapus tab</string>
     <string name="command_copy">Perintah disalin!</string>
     <string name="tab_delete_subtitle">Apakah Anda benar-benar ingin menghapus tab '%1$s' secara permanen?\n\nSemua perintah di dalam tab ini juga akan dihapus</string>
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_back">Kembali</string>
+    <string name="settings_dark_theme">Tema gelap</string>
+    <string name="settings_theme_light">Terang</string>
+    <string name="settings_theme_dark">Gelap</string>
+    <string name="settings_theme_current">Tema saat ini: %1$s</string>
 </resources>

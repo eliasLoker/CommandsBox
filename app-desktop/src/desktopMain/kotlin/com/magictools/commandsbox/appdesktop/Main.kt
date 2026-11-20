@@ -9,7 +9,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.magictools.commandsBox.commonui.customview.CommandsBoxToastView
 import com.magictools.commandsBox.commonui.navigation.MainNavHost
-import com.magictools.commandsBox.commonui.theme.CommandsBoxTheme
+import com.magictools.commandsBox.commonui.theme.CommandsBoxAppTheme
 import com.magictools.commandsBox.commonui.ui.main.MainViewModel
 import com.magictools.commandsBox.commonui.ui.main.OnToastDismissed
 import com.magictools.commandsBox.commonui.utils.DispatcherProvider
@@ -27,7 +27,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication
     ) {
         val viewModel: MainViewModel = koinViewModel()
-        CommandsBoxTheme {
+        CommandsBoxAppTheme {
             val viewState = viewModel.viewState.collectAsState().value
             Box(
                 modifier = Modifier.fillMaxSize()

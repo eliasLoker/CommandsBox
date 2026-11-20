@@ -9,4 +9,7 @@ sealed interface MainDestinations {
 
     @Serializable
     data object Home : MainDestinations
+
+    @Serializable
+    data object Settings : MainDestinations
 }

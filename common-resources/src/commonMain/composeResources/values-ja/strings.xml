@@ -20,4 +20,10 @@
     <string name="tab_delete_title">タブの削除</string>
     <string name="command_copy">コマンドをコピーしました！</string>
     <string name="tab_delete_subtitle">本当にタブ「%1$s」を永久に削除しますか？\n\nタブ内のすべてのコマンドも削除されます</string>
+    <string name="settings_title">設定</string>
+    <string name="settings_back">戻る</string>
+    <string name="settings_dark_theme">ダークテーマ</string>
+    <string name="settings_theme_light">ライト</string>
+    <string name="settings_theme_dark">ダーク</string>
+    <string name="settings_theme_current">現在のテーマ: %1$s</string>
 </resources>

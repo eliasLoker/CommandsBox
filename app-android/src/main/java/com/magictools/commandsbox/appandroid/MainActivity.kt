@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.magictools.commandsBox.commonui.customview.CommandsBoxToastView
 import com.magictools.commandsBox.commonui.navigation.MainNavHost
-import com.magictools.commandsBox.commonui.theme.CommandsBoxTheme
+import com.magictools.commandsBox.commonui.theme.CommandsBoxAppTheme
 import com.magictools.commandsBox.commonui.ui.main.MainViewModel
 import com.magictools.commandsBox.commonui.ui.main.OnToastDismissed
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CommandsBoxTheme {
+            CommandsBoxAppTheme {
                 val viewState = viewModel.viewState.collectAsState().value
                 Box(modifier = Modifier.fillMaxSize()) {
                     MainNavHost()
