@@ -32,6 +32,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.magictools.commandsBox.commonpresentation.model.AddBannerViewState
+import com.magictools.commandsBox.commonpresentation.model.InputViewState
 import com.magictools.commandsBox.commonui.theme.AppShapes
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
 import com.magictools.commandsBox.commonui.theme.AppTheme
@@ -44,19 +46,8 @@ import com.magictools.commandsbox.resources.add_tab_button
 import com.magictools.commandsbox.resources.add_tab_or_command_title
 import com.magictools.commandsbox.resources.ic_add_square
 import com.magictools.commandsbox.resources.ic_arrow_up
-import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
-
-@Serializable
-data class AddBannerViewState(
-    val isExpanded: Boolean = false,
-    val tabInputViewState: InputViewState = InputViewState(),
-    val commandInputViewState: InputViewState = InputViewState(),
-    val descriptionInputViewState: InputViewState = InputViewState(),
-    val hasTabs: Boolean = false,
-    val selectedTabName: String = ""
-)
 
 @Composable
 fun AddBannerView(

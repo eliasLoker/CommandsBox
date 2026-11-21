@@ -7,12 +7,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import com.magictools.commandsBox.commonpresentation.ui.main.MainViewModel
+import com.magictools.commandsBox.commonpresentation.ui.main.OnToastDismissed
+import com.magictools.commandsBox.commonpresentation.utils.DispatcherProvider
 import com.magictools.commandsBox.commonui.customview.CommandsBoxToastView
 import com.magictools.commandsBox.commonui.navigation.MainNavHost
 import com.magictools.commandsBox.commonui.theme.CommandsBoxAppTheme
-import com.magictools.commandsBox.commonui.ui.main.MainViewModel
-import com.magictools.commandsBox.commonui.ui.main.OnToastDismissed
-import com.magictools.commandsBox.commonui.utils.DispatcherProvider
 import com.magictools.commandsbox.resources.Res
 import com.magictools.commandsbox.resources.app_name
 import kotlinx.coroutines.Dispatchers

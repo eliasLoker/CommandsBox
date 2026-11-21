@@ -1,16 +1,16 @@
 package com.magictools.commandsBox.commonui.nativeapi
 
-import com.magictools.commandsBox.commonui.ui.home.HomeAction
-import com.magictools.commandsBox.commonui.ui.home.HomeEvent
-import com.magictools.commandsBox.commonui.ui.home.HomeViewModel
-import com.magictools.commandsBox.commonui.ui.home.HomeViewState
-import com.magictools.commandsBox.commonui.ui.main.MainEvent
-import com.magictools.commandsBox.commonui.ui.main.MainViewModel
-import com.magictools.commandsBox.commonui.ui.main.MainViewState
-import com.magictools.commandsBox.commonui.ui.settings.SettingsAction
-import com.magictools.commandsBox.commonui.ui.settings.SettingsEvent
-import com.magictools.commandsBox.commonui.ui.settings.SettingsViewModel
-import com.magictools.commandsBox.commonui.ui.settings.SettingsViewState
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeAction
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeEvent
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeViewModel
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeViewState
+import com.magictools.commandsBox.commonpresentation.ui.main.MainEvent
+import com.magictools.commandsBox.commonpresentation.ui.main.MainViewModel
+import com.magictools.commandsBox.commonpresentation.ui.main.MainViewState
+import com.magictools.commandsBox.commonpresentation.ui.settings.SettingsAction
+import com.magictools.commandsBox.commonpresentation.ui.settings.SettingsEvent
+import com.magictools.commandsBox.commonpresentation.ui.settings.SettingsViewModel
+import com.magictools.commandsBox.commonpresentation.ui.settings.SettingsViewState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

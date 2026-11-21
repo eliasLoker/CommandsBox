@@ -163,13 +163,21 @@ Keep state and callbacks explicitly passed between layers. Do not couple renderi
 
 ## 7. Koin Registration
 
-Register new `ViewModel`s in the existing module:
+Register new `ViewModel`s in the presentation module:
 
+`common-presentation/src/commonMain/kotlin/com/magictools/commandsBox/commonpresentation/CommonPresentationModule.kt`
+
+ViewModels, ViewStates, and `ViewEvent`/`ViewAction` contracts live in
+`:common-presentation`; screens and navigation stay in `:common-ui`.
+The `commonUiModule` declared in
 `common-ui/src/commonMain/kotlin/com/magictools/commandsBox/commonui/CommonUiModule.kt`
+includes `commonPresentationModule`, so app entry points that start Koin with
+`commonUiModule` continue to receive the presentation registrations.
 
 Follow existing registration patterns, including `viewModelOf(...)`.
 
-Register other dependencies using established conventions, such as `factoryOf(...)` and `singleOf(...)`, when their lifecycles are appropriate.
+Register other presentation dependencies using established conventions, such as
+`factoryOf(...)` and `singleOf(...)`, when their lifecycles are appropriate.
 
 Before changing dependency injection configuration:
 
@@ -294,7 +302,7 @@ Create a dedicated Screen file containing the screen's event and action contract
 
 ### 8.6. Dependency Injection and Verification
 
-- Register the new ViewModel in `common-ui/src/commonMain/kotlin/com/magictools/commandsBox/commonui/CommonUiModule.kt`, following existing conventions such as `viewModelOf(...)`.
+- Register the new ViewModel in `common-presentation/src/commonMain/kotlin/com/magictools/commandsBox/commonpresentation/CommonPresentationModule.kt`, following existing conventions such as `viewModelOf(...)`. The `:common-ui` `commonUiModule` includes this module, so existing app startup continues to resolve presentation ViewModels through `commonUiModule`.
 - Ensure that all required constructor dependencies are already registered or add only the necessary registrations.
 - Inspect the complete set of files created and modified for the screen.
 - Run the appropriate build or checks when possible.

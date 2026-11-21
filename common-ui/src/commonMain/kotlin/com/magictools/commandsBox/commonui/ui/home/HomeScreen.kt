@@ -67,11 +67,42 @@ import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.magictools.commandsBox.commonpresentation.model.AddBannerViewState
+import com.magictools.commandsBox.commonpresentation.model.CommandState
+import com.magictools.commandsBox.commonpresentation.model.InputViewState
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeAction
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeEvent
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeViewModel
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeViewState
+import com.magictools.commandsBox.commonpresentation.ui.home.OnAddBannerExpandIconClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnAddCommandClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnAddTabClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnCommandDownClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnCommandQueryChange
+import com.magictools.commandsBox.commonpresentation.ui.home.OnCommandUpClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnCopyCommandClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnDeleteCommandClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnDeleteCommandDialogConfirm
+import com.magictools.commandsBox.commonpresentation.ui.home.OnDeleteCommandDialogDismiss
+import com.magictools.commandsBox.commonpresentation.ui.home.OnDeleteTabClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnDeleteTabDialogConfirm
+import com.magictools.commandsBox.commonpresentation.ui.home.OnDeleteTabDialogDismiss
+import com.magictools.commandsBox.commonpresentation.ui.home.OnDescriptionQueryChange
+import com.magictools.commandsBox.commonpresentation.ui.home.OnEditApplyClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnEditCloseClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnEditCommandQueryChange
+import com.magictools.commandsBox.commonpresentation.ui.home.OnEditDescriptionQueryChange
+import com.magictools.commandsBox.commonpresentation.ui.home.OnEnableEditClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnTabEditClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnTabEditDialogConfirm
+import com.magictools.commandsBox.commonpresentation.ui.home.OnTabEditDialogDismiss
+import com.magictools.commandsBox.commonpresentation.ui.home.OnTabEditDialogTextChanged
+import com.magictools.commandsBox.commonpresentation.ui.home.OnTabLeftClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnTabQueryChange
+import com.magictools.commandsBox.commonpresentation.ui.home.OnTabRightClicked
+import com.magictools.commandsBox.commonpresentation.ui.home.OnTabSelected
 import com.magictools.commandsBox.commonui.customview.AddBannerView
-import com.magictools.commandsBox.commonui.customview.AddBannerViewState
-import com.magictools.commandsBox.commonui.customview.CommandState
 import com.magictools.commandsBox.commonui.customview.CommandView
-import com.magictools.commandsBox.commonui.customview.InputViewState
 import com.magictools.commandsBox.commonui.onDesktopScroll
 import com.magictools.commandsBox.commonui.theme.AppShapes
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
@@ -91,9 +122,7 @@ import com.magictools.commandsbox.resources.ic_delete
 import com.magictools.commandsbox.resources.ic_edit
 import com.magictools.commandsbox.resources.ic_settings
 import com.magictools.commandsbox.resources.settings_title
-import com.magictools.multimvi.action.ViewAction
 import com.magictools.multimvi.collectActions
-import com.magictools.multimvi.event.ViewEvent
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
@@ -607,38 +636,6 @@ private fun TabActionIcon(
         )
     }
 }
-
-sealed interface HomeAction : ViewAction
-
-sealed interface HomeEvent : ViewEvent
-class OnTabSelected(val tabId: Long) : HomeEvent
-data object OnAddBannerExpandIconClicked : HomeEvent
-data object OnAddTabClicked : HomeEvent
-data object OnAddCommandClicked : HomeEvent
-class OnTabQueryChange(val text: String) : HomeEvent
-class OnCommandQueryChange(val text: String) : HomeEvent
-class OnDescriptionQueryChange(val text: String) : HomeEvent
-
-class OnEditCommandQueryChange(val id: Long, val text: String) : HomeEvent
-class OnEditDescriptionQueryChange(val id: Long, val text: String) : HomeEvent
-class OnEditCloseClicked(val id: Long) : HomeEvent
-class OnEditApplyClicked(val id: Long) : HomeEvent
-class OnCopyCommandClicked(val id: Long) : HomeEvent
-class OnCommandUpClicked(val id: Long) : HomeEvent
-class OnCommandDownClicked(val id: Long) : HomeEvent
-class OnEnableEditClicked(val id: Long) : HomeEvent
-class OnDeleteCommandClicked(val id: Long) : HomeEvent
-data object OnDeleteCommandDialogDismiss : HomeEvent
-data object OnDeleteCommandDialogConfirm : HomeEvent
-class OnTabLeftClicked(val id: Long) : HomeEvent
-class OnTabRightClicked(val id: Long) : HomeEvent
-class OnTabEditClicked(val id: Long) : HomeEvent
-data object OnTabEditDialogDismiss : HomeEvent
-data object OnTabEditDialogConfirm : HomeEvent
-class OnTabEditDialogTextChanged(val text: String) : HomeEvent
-class OnDeleteTabClicked(val id: Long) : HomeEvent
-data object OnDeleteTabDialogDismiss : HomeEvent
-data object OnDeleteTabDialogConfirm : HomeEvent
 
 @Composable
 @Preview(widthDp = 411, heightDp = 800)

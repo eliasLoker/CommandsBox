@@ -6,12 +6,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
+import com.magictools.commandsBox.commonpresentation.ui.main.MainViewModel
+import com.magictools.commandsBox.commonpresentation.ui.main.OnToastDismissed
+import com.magictools.commandsBox.commonpresentation.utils.DispatcherProvider
 import com.magictools.commandsBox.commonui.customview.CommandsBoxToastView
 import com.magictools.commandsBox.commonui.navigation.MainNavHost
 import com.magictools.commandsBox.commonui.theme.CommandsBoxAppTheme
-import com.magictools.commandsBox.commonui.ui.main.MainViewModel
-import com.magictools.commandsBox.commonui.ui.main.OnToastDismissed
-import com.magictools.commandsBox.commonui.utils.DispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import org.koin.compose.viewmodel.koinViewModel
 import platform.UIKit.UIViewController

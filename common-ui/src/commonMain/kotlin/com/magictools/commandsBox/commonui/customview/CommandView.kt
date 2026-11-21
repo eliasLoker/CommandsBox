@@ -31,6 +31,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.magictools.commandsBox.commonpresentation.model.CommandState
+import com.magictools.commandsBox.commonpresentation.model.InputViewState
 import com.magictools.commandsBox.commonui.theme.AppShapes
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
 import com.magictools.commandsBox.commonui.theme.AppTheme
@@ -42,20 +44,9 @@ import com.magictools.commandsbox.resources.edit
 import com.magictools.commandsbox.resources.ic_arrow_up_with_tail
 import com.magictools.commandsbox.resources.ic_clear
 import com.magictools.commandsbox.resources.ic_copy
-import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.resources.Font
-
-@Serializable
-data class CommandState(
-    val id: Long,
-    val isEditMode: Boolean = false,
-    val command: String = "",
-    val description: String = "",
-    val commandInputViewState: InputViewState = InputViewState(),
-    val descriptionInputViewState: InputViewState = InputViewState(),
-)
 
 @Composable
 fun CommandView(

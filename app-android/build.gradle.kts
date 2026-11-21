@@ -39,6 +39,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(project(":common-presentation"))
     implementation(project(":common-ui"))
     implementation(project(":multi-mvi"))
 

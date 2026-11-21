@@ -1,9 +1,9 @@
-package com.magictools.commandsBox.commonui.ui.main
+package com.magictools.commandsBox.commonpresentation.ui.main
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.magictools.commandsBox.commonui.customview.ToastState
+import com.magictools.commandsBox.commonpresentation.model.ToastState
 import com.magictools.multimvi.event.listen
 import com.magictools.multimvi.state.viewState
 import kotlinx.coroutines.flow.launchIn

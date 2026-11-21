@@ -249,6 +249,7 @@ kotlin {
             baseName = "NativeApp"
             isStatic = true
 
+            export(project(":common-presentation"))
             export(project(":common-ui"))
             export(project(":multi-mvi"))
             export(project(":data"))
@@ -259,6 +260,7 @@ kotlin {
     sourceSets {
         val iosSimulatorArm64Main by getting {
             dependencies {
+                api(project(":common-presentation"))
                 api(project(":common-ui"))
                 api(project(":multi-mvi"))
                 api(project(":data"))

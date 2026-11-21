@@ -11,6 +11,7 @@ kotlin {
     sourceSets {
         val desktopMain by getting {
             dependencies {
+                implementation(project(":common-presentation"))
                 implementation(project(":common-ui"))
                 implementation(project(":common-resources"))
                 implementation(project(":data"))

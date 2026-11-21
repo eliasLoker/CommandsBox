@@ -29,6 +29,7 @@ include(":app-ios")
 include(":app-ios-native")
 include(":data")
 include(":common-resources")
+include(":common-presentation")
 include(":common-ui")
 include(":multi-mvi")
  

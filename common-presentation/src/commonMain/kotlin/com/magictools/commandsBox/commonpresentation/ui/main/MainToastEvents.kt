@@ -1,6 +1,6 @@
-package com.magictools.commandsBox.commonui.ui.main
+package com.magictools.commandsBox.commonpresentation.ui.main
 
-import com.magictools.commandsBox.commonui.customview.ToastState
+import com.magictools.commandsBox.commonpresentation.model.ToastState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

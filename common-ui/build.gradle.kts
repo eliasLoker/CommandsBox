@@ -22,6 +22,7 @@ kotlin {
                 implementation(project(":data"))
                 implementation(project(":multi-mvi"))
                 implementation(project(":common-resources"))
+                implementation(project(":common-presentation"))
 
                 implementation(libs.compose.runtime)
                 implementation(libs.compose.foundation)

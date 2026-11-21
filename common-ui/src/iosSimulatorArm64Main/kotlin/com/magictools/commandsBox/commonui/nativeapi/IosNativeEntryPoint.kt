@@ -1,12 +1,12 @@
 package com.magictools.commandsBox.commonui.nativeapi
 
 import androidx.lifecycle.SavedStateHandle
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeViewModel
+import com.magictools.commandsBox.commonpresentation.ui.main.MainViewModel
+import com.magictools.commandsBox.commonpresentation.ui.settings.SettingsViewModel
+import com.magictools.commandsBox.commonpresentation.utils.DispatcherProvider
 import com.magictools.commandsBox.commonui.commonUiModule
 import com.magictools.commandsBox.commonui.iosCommonUiModule
-import com.magictools.commandsBox.commonui.ui.home.HomeViewModel
-import com.magictools.commandsBox.commonui.ui.main.MainViewModel
-import com.magictools.commandsBox.commonui.ui.settings.SettingsViewModel
-import com.magictools.commandsBox.commonui.utils.DispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.context.startKoin
 import org.koin.dsl.module

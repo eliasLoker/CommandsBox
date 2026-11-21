@@ -3,7 +3,7 @@ package com.magictools.commandsBox.commonui
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import com.magictools.commandsBox.commonui.utils.CustomClipboardManager
+import com.magictools.commandsBox.commonpresentation.utils.CustomClipboardManager
 
 class CustomClipboardManagerImpl(
     private val context: Context

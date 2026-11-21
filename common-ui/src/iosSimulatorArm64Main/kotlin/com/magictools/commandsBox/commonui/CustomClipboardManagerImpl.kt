@@ -1,6 +1,6 @@
 package com.magictools.commandsBox.commonui
 
-import com.magictools.commandsBox.commonui.utils.CustomClipboardManager
+import com.magictools.commandsBox.commonpresentation.utils.CustomClipboardManager
 import platform.UIKit.UIPasteboard
 
 class CustomClipboardManagerImpl : CustomClipboardManager {

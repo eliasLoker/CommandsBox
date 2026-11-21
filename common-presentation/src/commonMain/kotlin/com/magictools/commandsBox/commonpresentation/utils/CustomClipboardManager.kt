@@ -1,4 +1,4 @@
-package com.magictools.commandsBox.commonui.utils
+package com.magictools.commandsBox.commonpresentation.utils
 
 interface CustomClipboardManager {
 

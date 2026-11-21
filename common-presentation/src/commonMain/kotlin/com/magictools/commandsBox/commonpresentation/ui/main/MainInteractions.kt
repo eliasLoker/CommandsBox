@@ -1,4 +1,4 @@
-package com.magictools.commandsBox.commonui.ui.main
+package com.magictools.commandsBox.commonpresentation.ui.main
 
 import com.magictools.multimvi.event.ViewEvent
 

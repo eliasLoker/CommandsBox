@@ -2,8 +2,8 @@
 
 This document describes the small Swift-facing layer added to `:common-ui`
 for a future native iOS consumer. It does not define any UI: screens are
-expected to be SwiftUI, while screen state and behavior stay in the existing
-Kotlin ViewModels.
+expected to be SwiftUI, while screen state and behavior stay in the Kotlin
+ViewModels in `:common-presentation`.
 
 ## API surface
 
@@ -12,13 +12,19 @@ Source files:
 - `common-ui/src/iosSimulatorArm64Main/kotlin/com/magictools/commandsBox/commonui/nativeapi/NativeViewModelApi.kt`
 - `common-ui/src/iosSimulatorArm64Main/kotlin/com/magictools/commandsBox/commonui/nativeapi/IosNativeEntryPoint.kt`
 
+The bridge itself stays in `:common-ui`. The ViewModel, ViewState, event, and
+action types it exposes come from `:common-presentation` and are imported from
+`com.magictools.commandsBox.commonpresentation`.
+
 Entry points:
 
-- `startIosNativeKoin()` initializes `DispatcherProvider` with
-  `Dispatchers.Main` and, if Koin has not been started yet, starts it with
-  `iosPlatformModule`, `commonUiModule`, and `iosCommonUiModule`. The
-  `iosPlatformModule` only provides a fresh `SavedStateHandle` factory, matching
-  the existing `:app-ios` setup.
+- `startIosNativeKoin()` initializes `DispatcherProvider` from
+  `:common-presentation` with `Dispatchers.Main` and, if Koin has not been
+  started yet, starts it with `iosPlatformModule`, `commonUiModule`, and
+  `iosCommonUiModule`. `commonUiModule` includes `commonPresentationModule`,
+  so the presentation ViewModels are registered through the existing app
+  startup module. The `iosPlatformModule` only provides a fresh
+  `SavedStateHandle` factory, matching the existing `:app-ios` setup.
 - `createIosViewModelHost()` resolves one Main, Home, and Settings ViewModel
   from the shared Koin graph and returns a `NativeViewModelHost`.
 
@@ -53,12 +59,12 @@ business rules.
 
 ## Framework export
 
-The future `app-ios-native` framework must export `:common-ui` to see this API.
-Because the exposed state and event types reference shared types, the framework
-also needs to export `:multi-mvi` (for `ViewState`, `ViewEvent`, `ViewAction`)
-and `:data` (for `ThemePreference` used by `SettingsViewState`). This is a
-build configuration change for the native app module and is intentionally not
-part of the `:common-ui` prerequisite.
+The `app-ios-native` framework exports `:common-presentation`, `:common-ui`,
+`:multi-mvi`, and `:data` in `app-ios-native/build.gradle.kts`.
+`:common-ui` contains the Swift-facing bridge, `:common-presentation` contains
+the ViewModels and their ViewState/ViewEvent/ViewAction contracts, `:multi-mvi`
+supplies `ViewState`, `ViewEvent`, and `ViewAction`, and `:data` supplies
+`ThemePreference` used by `SettingsViewState`.
 
 ## Verification limitation
 

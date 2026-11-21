@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.magictools.commandsBox.commonpresentation.model.InputViewState
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
 import com.magictools.commandsBox.commonui.theme.AppTheme
 import com.magictools.commandsbox.resources.Res
@@ -30,26 +31,8 @@ import com.magictools.commandsbox.resources.ic_clear
 import com.magictools.commandsbox.resources.ic_command
 import com.magictools.commandsbox.resources.ic_details
 import com.magictools.commandsbox.resources.ic_tab
-import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.vectorResource
-
-@Serializable
-data class InputViewState(
-    val query: String = "",
-    val hint: String = "",
-    val maxLines: Int = 1,
-    val singleLine: Boolean = true,
-    val maxLength: Int = 0,
-    val icon: InputIcon = InputIcon.COMMAND
-) {
-    enum class InputIcon {
-        TAB,
-        COMMAND,
-        DESCRIPTION
-    }
-
-}
 
 @Composable
 fun InputView(

@@ -1,7 +1,7 @@
-package com.magictools.commandsBox.commonui.ui.home
+package com.magictools.commandsBox.commonpresentation.ui.home
 
-import com.magictools.commandsBox.commonui.customview.AddBannerViewState
-import com.magictools.commandsBox.commonui.customview.CommandState
+import com.magictools.commandsBox.commonpresentation.model.AddBannerViewState
+import com.magictools.commandsBox.commonpresentation.model.CommandState
 import com.magictools.multimvi.state.ViewState
 import kotlinx.serialization.Serializable
 

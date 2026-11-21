@@ -1,9 +1,9 @@
-package com.magictools.commandsBox.commonui.ui.settings
+package com.magictools.commandsBox.commonpresentation.ui.settings
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.magictools.commandsBox.commonui.utils.AppMainDispatcher
+import com.magictools.commandsBox.commonpresentation.utils.AppMainDispatcher
 import com.magictools.commandsbox.data.ThemePreference
 import com.magictools.commandsbox.data.ThemePreferences
 import com.magictools.multimvi.action.actions

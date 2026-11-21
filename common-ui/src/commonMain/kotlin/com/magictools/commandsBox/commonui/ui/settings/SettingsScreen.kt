@@ -30,6 +30,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.magictools.commandsBox.commonpresentation.ui.settings.OnBackClicked
+import com.magictools.commandsBox.commonpresentation.ui.settings.OnThemeChanged
+import com.magictools.commandsBox.commonpresentation.ui.settings.SettingsAction
+import com.magictools.commandsBox.commonpresentation.ui.settings.SettingsEvent
+import com.magictools.commandsBox.commonpresentation.ui.settings.SettingsViewModel
+import com.magictools.commandsBox.commonpresentation.ui.settings.SettingsViewState
 import com.magictools.commandsBox.commonui.theme.AppShapes
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
 import com.magictools.commandsBox.commonui.theme.AppTheme
@@ -43,9 +49,7 @@ import com.magictools.commandsbox.resources.settings_theme_current
 import com.magictools.commandsbox.resources.settings_theme_dark
 import com.magictools.commandsbox.resources.settings_theme_light
 import com.magictools.commandsbox.resources.settings_title
-import com.magictools.multimvi.action.ViewAction
 import com.magictools.multimvi.collectActions
-import com.magictools.multimvi.event.ViewEvent
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -181,14 +185,6 @@ private fun SettingsIconButton(
         )
     }
 }
-
-sealed interface SettingsAction : ViewAction {
-    data object NavigateBack : SettingsAction
-}
-
-sealed interface SettingsEvent : ViewEvent
-data object OnBackClicked : SettingsEvent
-class OnThemeChanged(val isDark: Boolean) : SettingsEvent
 
 @Composable
 @Preview(widthDp = 411, heightDp = 800)

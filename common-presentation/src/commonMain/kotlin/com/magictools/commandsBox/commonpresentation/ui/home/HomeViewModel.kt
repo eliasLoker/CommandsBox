@@ -1,17 +1,18 @@
-package com.magictools.commandsBox.commonui.ui.home
+package com.magictools.commandsBox.commonpresentation.ui.home
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.magictools.commandsBox.commonui.customview.AddBannerViewState
-import com.magictools.commandsBox.commonui.customview.CommandState
-import com.magictools.commandsBox.commonui.customview.InputViewState
-import com.magictools.commandsBox.commonui.customview.ToastState
-import com.magictools.commandsBox.commonui.ui.home.HomeViewState.DeleteCommandDialogState
-import com.magictools.commandsBox.commonui.ui.home.HomeViewState.EditTabDialogState
-import com.magictools.commandsBox.commonui.ui.main.MainToastEvents
-import com.magictools.commandsBox.commonui.utils.AppMainDispatcher
-import com.magictools.commandsBox.commonui.utils.CustomClipboardManager
+import com.magictools.commandsBox.commonpresentation.model.AddBannerViewState
+import com.magictools.commandsBox.commonpresentation.model.CommandState
+import com.magictools.commandsBox.commonpresentation.model.InputViewState
+import com.magictools.commandsBox.commonpresentation.model.ToastState
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeViewState.DeleteCommandDialogState
+import com.magictools.commandsBox.commonpresentation.ui.home.HomeViewState.EditTabDialogState
+import com.magictools.commandsBox.commonpresentation.ui.main.MainToastEvents
+import com.magictools.commandsBox.commonpresentation.utils.AppMainDispatcher
+import com.magictools.commandsBox.commonpresentation.utils.CustomClipboardManager
+import com.magictools.commandsBox.commonpresentation.utils.stringprovider.StringProvider
 import com.magictools.commandsbox.data.MainRepository
 import com.magictools.commandsbox.data.model.TabWithCommandsModel
 import com.magictools.commandsbox.resources.Res
@@ -28,7 +29,6 @@ import com.magictools.commandsbox.resources.edit
 import com.magictools.commandsbox.resources.tab_delete_subtitle
 import com.magictools.commandsbox.resources.tab_delete_title
 import com.magictools.commandsbox.resources.tab_edit_title
-import com.magictools.composeui.main.utils.StringProvider
 import com.magictools.multimvi.action.actions
 import com.magictools.multimvi.event.listen
 import com.magictools.multimvi.state.viewState

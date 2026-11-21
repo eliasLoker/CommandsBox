@@ -1,4 +1,4 @@
-package com.magictools.commandsBox.commonui.ui.settings
+package com.magictools.commandsBox.commonpresentation.ui.settings
 
 import com.magictools.commandsbox.data.ThemePreference
 import com.magictools.multimvi.state.ViewState

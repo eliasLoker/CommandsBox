@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.magictools.commandsBox.commonpresentation.model.ToastState
 import com.magictools.commandsBox.commonui.theme.AppTextTokens
 import com.magictools.commandsBox.commonui.theme.AppTheme
 import com.magictools.commandsBox.commonui.theme.CommandsBoxTheme
@@ -35,27 +36,7 @@ import com.magictools.commandsbox.resources.Res
 import com.magictools.commandsbox.resources.ic_failure
 import com.magictools.commandsbox.resources.ic_success
 import kotlinx.coroutines.delay
-import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
-
-@Serializable
-data class ToastState(
-    val data: Data = Data(),
-    val isVisible: Boolean = false,
-    val durationMs: Long = 3000L
-) {
-
-    @Serializable
-    data class Data(
-        val type: Type = Type.SUCCESS,
-        val message: String = "",
-    )
-
-    enum class Type {
-        SUCCESS,
-        ERROR
-    }
-}
 
 @Composable
 fun CommandsBoxToastView(

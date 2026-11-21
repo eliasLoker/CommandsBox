@@ -1,4 +1,4 @@
-package com.magictools.composeui.main.utils
+package com.magictools.commandsBox.commonpresentation.utils.stringprovider
 
 import org.jetbrains.compose.resources.StringResource
 

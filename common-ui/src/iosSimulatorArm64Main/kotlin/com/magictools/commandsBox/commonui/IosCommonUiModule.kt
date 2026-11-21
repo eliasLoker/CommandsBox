@@ -1,6 +1,6 @@
 package com.magictools.commandsBox.commonui
 
-import com.magictools.commandsBox.commonui.utils.CustomClipboardManager
+import com.magictools.commandsBox.commonpresentation.utils.CustomClipboardManager
 import com.magictools.commandsbox.data.iosDataModule
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.binds
