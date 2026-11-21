@@ -1,4 +1,4 @@
-package com.magictools.commandsBox.commonui.nativeapi
+package com.magictools.commandsbox.appiosnative.nativeapi
 
 import com.magictools.commandsBox.commonpresentation.ui.home.HomeAction
 import com.magictools.commandsBox.commonpresentation.ui.home.HomeEvent

@@ -250,7 +250,6 @@ kotlin {
             isStatic = true
 
             export(project(":common-presentation"))
-            export(project(":common-ui"))
             export(project(":multi-mvi"))
             export(project(":data"))
             export("dev.icerock.moko:resources:${libs.versions.moko.resources.get()}")
@@ -261,13 +260,13 @@ kotlin {
         val iosSimulatorArm64Main by getting {
             dependencies {
                 api(project(":common-presentation"))
-                api(project(":common-ui"))
                 api(project(":multi-mvi"))
                 api(project(":data"))
                 api(libs.moko.resources)
 
                 implementation(project(":common-resources"))
 
+                implementation(libs.androidx.lifecycle.viewmodel.savedstate)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.compose.resources)
                 implementation(libs.koin.core)

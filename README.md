@@ -34,8 +34,9 @@ commitment to ship on the App Store.
 | `:app-android` | Android application entry point. |
 | `:app-desktop` | Desktop (JVM) application entry point and native packaging. |
 | `:app-ios` | Compose iOS entry point, Compose framework, and the Xcode host project. |
-| `:app-ios-native` | Native SwiftUI iOS entry point, Kotlin ViewModel bridge in `:common-ui`, Moko resources generated from `:common-resources`, and the `CommandsBoxNative` Xcode host project. Does not host Compose UI. |
-| `:common-ui` | Shared Compose UI, navigation, ViewModels, and UI dependency injection. |
+| `:app-ios-native` | Native SwiftUI iOS entry point, app-owned Kotlin ViewModel bridge and iOS startup/clipboard bindings, Moko resources generated from `:common-resources`, and the `CommandsBoxNative` Xcode host project. Does not host Compose UI or depend on `:common-ui`. |
+| `:common-presentation` | Shared ViewModels, presentation contracts, and presentation dependency injection. |
+| `:common-ui` | Shared Compose UI, navigation, and UI dependency injection. |
 | `:data` | Repositories and Room persistence, with platform-specific database setup. |
 | `:common-resources` | Shared Compose resources and localized strings. |
 | `:multi-mvi` | Shared MVI state, events, actions, and collection helpers. |
@@ -97,9 +98,9 @@ localization, and resource details.
   Xcode project: `app-ios/iosApp/iosApp.xcodeproj`, scheme `iosApp`, static
   framework `ComposeApp`.
 * `:app-ios-native` — native SwiftUI screens that reuse the Main, Home, and
-  Settings ViewModels from `:common-ui` through the iOS native bridge. It does
-  not host Compose UI. Xcode project:
-  `app-ios-native/iosApp/CommandsBoxNative.xcodeproj`, scheme
+  Settings ViewModels from `:common-presentation` through the app-owned iOS
+  native bridge. It does not host Compose UI or depend on `:common-ui`. Xcode
+  project: `app-ios-native/iosApp/CommandsBoxNative.xcodeproj`, scheme
   `CommandsBoxNative`, static framework `NativeApp`. See
   [`app-ios-native/README.md`](app-ios-native/README.md).
 * Both apps use the shared `:data` repositories, Room schema, MVI helpers, and

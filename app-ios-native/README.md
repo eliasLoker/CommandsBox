@@ -1,11 +1,11 @@
 # Native SwiftUI iOS app (`:app-ios-native`)
 
 This module is the native iOS host for CommandsBox. Every screen is SwiftUI; the
-business behavior comes from the existing shared `:common-ui` ViewModels through
-the Phase 1 bridge in
-`common-ui/src/iosSimulatorArm64Main/kotlin/com/magictools/commandsBox/commonui/nativeapi/`.
-There is no Compose view controller or composable in this module, and `:app-ios`
-is not changed by it.
+business behavior comes from the shared `:common-presentation` ViewModels through
+the app-owned bridge in
+`app-ios-native/src/iosSimulatorArm64Main/kotlin/com/magictools/commandsbox/appiosnative/nativeapi/`.
+There is no Compose view controller or composable in this module, no dependency
+on `:common-ui`, and `:app-ios` is not changed by it.
 
 ## Build and run
 
@@ -63,7 +63,9 @@ xcrun simctl uninstall <device-udid> com.magictools.commandsbox.iosNative
 
 `NativeAppHost` creates one app-lifetime `NativeViewModelHost` after
 `startIosNativeKoin()`, observes Main/Home/Settings state and Settings actions,
-and dispatches the existing events. The only Swift-side state is presentation
+and dispatches the existing events. `startIosNativeKoin()` starts Koin with the
+presentation module, the iOS data module, and this app's `SavedStateHandle` and
+clipboard bindings. The only Swift-side state is presentation
 state: the current screen, local text-control editing buffers, focus and the
 toast overlay animation. Dialog labels, hints, toast messages and theme
 preferences all still come from the shared ViewModels.
