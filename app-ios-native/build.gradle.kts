@@ -120,6 +120,50 @@ fun vectorXmlToSvg(file: File): String {
     }
 }
 
+fun convertLogoToPng(source: File, target: File, size: Int) {
+    val process = if (System.getProperty("os.name").contains("Mac", ignoreCase = true)) {
+        ProcessBuilder(
+            "sips",
+            "-s",
+            "format",
+            "png",
+            "--resampleHeightWidth",
+            size.toString(),
+            size.toString(),
+            source.absolutePath,
+            "--out",
+            target.absolutePath,
+        )
+    } else {
+        ProcessBuilder(
+            "python3",
+            "-c",
+            """
+                from PIL import Image
+                import sys
+
+                image = Image.open(sys.argv[1]).convert("RGBA")
+                image = image.resize((int(sys.argv[2]), int(sys.argv[2])), Image.Resampling.LANCZOS)
+                image.save(sys.argv[3], format="PNG")
+            """.trimIndent(),
+            source.absolutePath,
+            size.toString(),
+            target.absolutePath,
+        )
+    }
+        .redirectErrorStream(true)
+        .start()
+
+    val output = process.inputStream.bufferedReader().use { it.readText() }
+    check(process.waitFor() == 0) {
+        if (System.getProperty("os.name").contains("Mac", ignoreCase = true)) {
+            "Failed to convert shared logo to PNG:\n$output"
+        } else {
+            "Failed to convert shared logo to PNG. Non-macOS builds require Python 3 with Pillow installed:\n$output"
+        }
+    }
+}
+
 val syncMokoResources = tasks.register("syncMokoResources") {
     group = "moko-resources"
     description = "Generates Moko resource inputs from :common-resources Compose resources."
@@ -166,22 +210,7 @@ val syncMokoResources = tasks.register("syncMokoResources") {
         require(logoScaledSource != null) { "Missing shared logo" }
         mokoLogoScales.forEach { (scale, size) ->
             val target = File(imagesDirectory, "commandsbox_logo_transparent@${scale}x.png")
-            val process = ProcessBuilder(
-                "sips",
-                "-s",
-                "format",
-                "png",
-                "--resampleHeightWidth",
-                size.toString(),
-                size.toString(),
-                logoScaledSource.absolutePath,
-                "--out",
-                target.absolutePath,
-            )
-                .redirectErrorStream(true)
-                .start()
-            val output = process.inputStream.bufferedReader().use { it.readText() }
-            check(process.waitFor() == 0) { "Failed to convert shared logo to PNG:\n$output" }
+            convertLogoToPng(logoScaledSource, target, size)
         }
         val fontSource = File(sourceDirectory, "font/CascadiaCodeItalic.ttf")
         require(fontSource.isFile) { "Missing shared font: ${fontSource.path}" }
