@@ -17,6 +17,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -33,13 +34,13 @@ class MainViewModelBridge internal constructor(
     private val viewModel: MainViewModel
 ) : AutoCloseable {
 
-    private val observations = NativeObservationScope()
+    private val observations = NativeObservationScope(viewModel.viewState)
 
     val currentState: MainViewState
-        get() = viewModel.viewState.value
+        get() = observations.currentState
 
     fun observeState(onState: (MainViewState) -> Unit): ViewModelSubscription =
-        observations.observe(viewModel.viewState, onState)
+        observations.observeState(onState)
 
     fun dispatch(event: MainEvent) {
         viewModel.onNewEvent(event)
@@ -54,13 +55,13 @@ class HomeViewModelBridge internal constructor(
     private val viewModel: HomeViewModel
 ) : AutoCloseable {
 
-    private val observations = NativeObservationScope()
+    private val observations = NativeObservationScope(viewModel.viewState)
 
     val currentState: HomeViewState
-        get() = viewModel.viewState.value
+        get() = observations.currentState
 
     fun observeState(onState: (HomeViewState) -> Unit): ViewModelSubscription =
-        observations.observe(viewModel.viewState, onState)
+        observations.observeState(onState)
 
     fun observeActions(onAction: (HomeAction) -> Unit): ViewModelSubscription =
         observations.observe(viewModel.action) { bundle ->
@@ -84,13 +85,13 @@ class SettingsViewModelBridge internal constructor(
     private val viewModel: SettingsViewModel
 ) : AutoCloseable {
 
-    private val observations = NativeObservationScope()
+    private val observations = NativeObservationScope(viewModel.viewState)
 
     val currentState: SettingsViewState
-        get() = viewModel.viewState.value
+        get() = observations.currentState
 
     fun observeState(onState: (SettingsViewState) -> Unit): ViewModelSubscription =
-        observations.observe(viewModel.viewState, onState)
+        observations.observeState(onState)
 
     fun observeActions(onAction: (SettingsAction) -> Unit): ViewModelSubscription =
         observations.observe(viewModel.action) { bundle ->
@@ -123,9 +124,23 @@ class NativeViewModelHost internal constructor(
     }
 }
 
-private class NativeObservationScope : AutoCloseable {
+/**
+ * Owns everything a bridge needs to observe one ViewModel: the state source, the
+ * main-dispatcher scope, subscription creation and cancellation on close. Bridges
+ * only expose their typed delegations on top of it, so the observation and
+ * cleanup behavior stays identical across Main, Home and Settings.
+ */
+private class NativeObservationScope<State>(
+    private val stateFlow: StateFlow<State>
+) : AutoCloseable {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
+    val currentState: State
+        get() = stateFlow.value
+
+    fun observeState(onState: (State) -> Unit): ViewModelSubscription =
+        observe(stateFlow, onState)
 
     fun <T> observe(flow: Flow<T>, onValue: (T) -> Unit): ViewModelSubscription {
         val job = scope.launch {
