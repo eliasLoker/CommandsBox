@@ -50,9 +50,9 @@ import com.magictools.commandsbox.resources.settings_theme_dark
 import com.magictools.commandsbox.resources.settings_theme_light
 import com.magictools.commandsbox.resources.settings_title
 import com.magictools.multimvi.collectActions
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
-import org.koin.compose.viewmodel.koinViewModel
 
 @Suppress("UNUSED_PARAMETER")
 @Composable
@@ -60,7 +60,7 @@ internal fun SettingsScreen(
     argument: SettingsArgument,
     onBack: () -> Unit
 ) {
-    val viewModel = koinViewModel<SettingsViewModel>()
+    val viewModel = metroViewModel<SettingsViewModel>()
     val state = viewModel.viewState.collectAsState()
     viewModel.action.collectActions<SettingsAction>(
         dismiss = {

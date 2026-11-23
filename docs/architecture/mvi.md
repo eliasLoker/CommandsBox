@@ -139,7 +139,7 @@ Follow the existing `HomeScreen` implementation.
 
 **Screen:**
 
-- Obtains the `ViewModel` through Koin using the project's established approach, such as `koinViewModel()`.
+- Obtains the `ViewModel` through Metro's Compose integration using the project's established approach, such as `metroViewModel()`.
 - Collects `viewState`.
 - Collects and handles `ViewAction`s.
 - Passes the state and event handler to the rendering function.
@@ -161,29 +161,60 @@ Follow the existing `HomeScreen` implementation.
 
 Keep state and callbacks explicitly passed between layers. Do not couple rendering functions directly to a `ViewModel` when the existing screen pattern separates `Screen` and `View`.
 
-## 7. Koin Registration
+## 7. Metro Registration
 
-Register new `ViewModel`s in the presentation module:
-
-`common-presentation/src/commonMain/kotlin/com/magictools/commandsBox/commonpresentation/CommonPresentationModule.kt`
+The project uses [Metro](https://zacsweers.github.io/metro/) for dependency injection.
+Bindings are declared with Metro annotations and aggregated into a compile-time graph;
+there is no runtime container to start.
 
 ViewModels, ViewStates, and `ViewEvent`/`ViewAction` contracts live in
 `:common-presentation`; screens and navigation stay in `:common-ui`.
-The `commonUiModule` declared in
-`common-ui/src/commonMain/kotlin/com/magictools/commandsBox/commonui/CommonUiModule.kt`
-includes `commonPresentationModule`, so app entry points that start Koin with
-`commonUiModule` continue to receive the presentation registrations.
 
-Follow existing registration patterns, including `viewModelOf(...)`.
+Register a new `ViewModel` by annotating it with `@AssistedInject` and adding an
+`@AssistedFactory` factory that contributes the ViewModel into the Metro multibinding map:
 
-Register other presentation dependencies using established conventions, such as
-`factoryOf(...)` and `singleOf(...)`, when their lifecycles are appropriate.
+```kotlin
+@AssistedInject
+class HomeViewModel(
+    @Assisted savedStateHandle: SavedStateHandle,
+    // ...other dependencies
+) : ViewModel() {
+
+    @AssistedFactory
+    @ViewModelAssistedFactoryKey(HomeViewModel::class)
+    @ContributesIntoMap(AppScope::class)
+    fun interface Factory : ViewModelAssistedFactory {
+        override fun create(extras: CreationExtras): HomeViewModel =
+            create(createViewModelSavedStateHandle(extras))
+
+        fun create(@Assisted savedStateHandle: SavedStateHandle): HomeViewModel
+    }
+}
+```
+
+`AppViewModelFactory` (in `:common-presentation`) implements Metro's
+`MetroViewModelFactory` and is contributed to `AppScope` with `@ContributesBinding`.
+Each app entry point creates its own platform-specific `@DependencyGraph` that extends
+`ViewModelGraph` and provides the factory through `LocalMetroViewModelFactory`.
+
+Register other presentation dependencies with Metro annotations:
+
+- `@Inject` + `@SingleIn(AppScope::class)` for singletons.
+- `@ContributesBinding(AppScope::class)` for interface bindings.
+- `@BindingContainer` + `@ContributesTo(AppScope::class)` for platform-specific
+  binding containers.
+- `@Provides` for dependencies that cannot be constructor-injected.
+
+Platform-specific bindings (database builders, clipboard implementations) live in the
+platform source set and contribute to the same `AppScope`. Shared code must not assume
+that a common graph can see platform-only bindings; each app entry point creates its own
+graph in its platform source set.
 
 Before changing dependency injection configuration:
 
 1. Inspect the new `ViewModel` constructor.
-2. Ensure all its dependencies are registered.
-3. Review existing registrations.
+2. Ensure all its dependencies are resolvable through Metro.
+3. Review existing bindings and contributions.
 4. Make only the necessary changes.
 
 ## 8. New Screen Creation Checklist
@@ -246,7 +277,7 @@ Create a dedicated Screen file containing the screen's event and action contract
 **Public Screen function:**
 
 - Create a public `Screen` composable function that accepts the screen's `Argument` object as a parameter, following existing project conventions.
-- Obtain the ViewModel through Koin using the established project approach.
+- Obtain the ViewModel through Metro's Compose integration using the established project approach, such as `metroViewModel()`.
 - Collect the ViewModel's `viewState`.
 - Collect and handle `ViewAction` instances using the existing `collectActions(...)` mechanism.
 - Pass the concrete state data class and the event callback to the separate rendering function.
@@ -296,18 +327,18 @@ Create a dedicated Screen file containing the screen's event and action contract
 - If a preview variant cannot be reproduced, explain why and
   provide an appropriate equivalent when possible.
 - Previews should invoke the `View` function directly and remain
-  independent of a running ViewModel, Koin, repositories, or
+  independent of a running ViewModel, Metro graph, repositories, or
   platform services wherever the existing setup allows it.
 - Do not omit previews merely to reduce the amount of generated code.
 
 ### 8.6. Dependency Injection and Verification
 
-- Register the new ViewModel in `common-presentation/src/commonMain/kotlin/com/magictools/commandsBox/commonpresentation/CommonPresentationModule.kt`, following existing conventions such as `viewModelOf(...)`. The `:common-ui` `commonUiModule` includes this module, so existing app startup continues to resolve presentation ViewModels through `commonUiModule`.
-- Ensure that all required constructor dependencies are already registered or add only the necessary registrations.
+- Register the new ViewModel by annotating it with `@AssistedInject` and adding an `@AssistedFactory` factory with `@ViewModelAssistedFactoryKey(...)` and `@ContributesIntoMap(AppScope::class)`, following the existing `HomeViewModel` pattern. Each app entry point's `@DependencyGraph` aggregates the contributed ViewModel factories through `ViewModelGraph`.
+- Ensure that all required constructor dependencies are already resolvable through Metro or add only the necessary bindings.
 - Inspect the complete set of files created and modified for the screen.
 - Run the appropriate build or checks when possible.
 - Check `git status --short` and ensure that all required new source files are included in the final changes. Explicitly report any remaining untracked files.
-- Before finishing, verify that the Screen, View, ViewModel, state, event handling, actions, previews, and dependency injection registration are connected consistently.
+- Before finishing, verify that the Screen, View, ViewModel, state, event handling, actions, previews, and Metro registration are connected consistently.
 - Inspect the existing navigation configuration and identify all
   registration or routing changes required for the new screen.
 - When the task requires a fully integrated screen, register it

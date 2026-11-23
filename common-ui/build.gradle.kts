@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -29,9 +30,7 @@ kotlin {
                 implementation(libs.compose.material3)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.androidx.lifecycle.viewmodel.compose)
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose)
-                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.metrox.viewmodel.compose)
                 implementation(libs.compose.resources)
                 implementation(libs.compose.navigation)
                 implementation(libs.compose.ui.tooling.preview)

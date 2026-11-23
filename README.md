@@ -105,7 +105,7 @@ localization, and resource details.
   [`app-ios-native/README.md`](app-ios-native/README.md).
 * Both apps use the shared `:data` repositories, Room schema, MVI helpers, and
   the iOS platform implementations that are available (Room database in the app
-  sandbox, clipboard access, and Koin wiring).
+  sandbox, clipboard access, and Metro dependency wiring).
 * Localization and assets: the Compose app uses Compose Resources. Moko Resources
   is configured only for `:app-ios-native`, with generated inputs derived from
   the same `:common-resources` strings, images, and fonts; text produced by the

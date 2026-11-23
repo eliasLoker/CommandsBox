@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -25,8 +26,7 @@ kotlin {
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.androidx.lifecycle.viewmodel.savedstate)
-                implementation(libs.koin.core)
-                implementation(libs.koin.core.viewmodel)
+                api(libs.metrox.viewmodel)
                 implementation(libs.compose.resources)
             }
         }

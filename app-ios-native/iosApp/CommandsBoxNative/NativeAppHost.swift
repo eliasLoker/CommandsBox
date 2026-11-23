@@ -13,7 +13,7 @@ final class NativeAppHost: ObservableObject {
     @Published private(set) var settingsBackSignal: Int = 0
 
     init() {
-        IosNativeEntryPointKt.startIosNativeKoin()
+        IosNativeEntryPointKt.startIosNative()
         viewModels = IosNativeEntryPointKt.createIosViewModelHost()
 
         mainState = viewModels.main.currentState

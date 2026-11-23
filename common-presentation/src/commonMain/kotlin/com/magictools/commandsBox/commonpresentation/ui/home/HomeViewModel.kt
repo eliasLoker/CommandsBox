@@ -3,6 +3,7 @@ package com.magictools.commandsBox.commonpresentation.ui.home
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.magictools.commandsBox.commonpresentation.model.AddBannerViewState
 import com.magictools.commandsBox.commonpresentation.model.CommandState
 import com.magictools.commandsBox.commonpresentation.model.InputViewState
@@ -12,7 +13,9 @@ import com.magictools.commandsBox.commonpresentation.ui.home.HomeViewState.EditT
 import com.magictools.commandsBox.commonpresentation.ui.main.MainToastEvents
 import com.magictools.commandsBox.commonpresentation.utils.AppMainDispatcher
 import com.magictools.commandsBox.commonpresentation.utils.CustomClipboardManager
+import com.magictools.commandsBox.commonpresentation.utils.createViewModelSavedStateHandle
 import com.magictools.commandsBox.commonpresentation.utils.stringprovider.StringProvider
+import dev.zacsweers.metro.AppScope
 import com.magictools.commandsbox.data.MainRepository
 import com.magictools.commandsbox.data.model.TabWithCommandsModel
 import com.magictools.commandsbox.resources.Res
@@ -33,12 +36,19 @@ import com.magictools.multimvi.action.actions
 import com.magictools.multimvi.event.listen
 import com.magictools.multimvi.state.viewState
 import com.magictools.multimvi.viewmodelstate.state
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactoryKey
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
+@AssistedInject
 class HomeViewModel(
-    savedStateHandle: SavedStateHandle,
+    @Assisted savedStateHandle: SavedStateHandle,
     private val stringProvider: StringProvider,
     private val mainRepository: MainRepository,
     private val customClipboardManager: CustomClipboardManager,
@@ -461,6 +471,16 @@ class HomeViewModel(
                 )
             )
         }
+    }
+
+    @AssistedFactory
+    @ViewModelAssistedFactoryKey(HomeViewModel::class)
+    @ContributesIntoMap(AppScope::class)
+    fun interface Factory : ViewModelAssistedFactory {
+        override fun create(extras: CreationExtras): HomeViewModel =
+            create(createViewModelSavedStateHandle(extras))
+
+        fun create(@Assisted savedStateHandle: SavedStateHandle): HomeViewModel
     }
 
     @Serializable

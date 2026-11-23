@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -18,7 +19,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.koin.core)
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.coroutines.core)
@@ -33,7 +33,7 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(libs.koin.android)
+
             }
         }
         val jvmMain by getting {

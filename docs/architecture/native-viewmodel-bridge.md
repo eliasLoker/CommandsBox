@@ -20,19 +20,16 @@ The ViewModel, ViewState, event, and action types it exposes come from
 
 Entry points:
 
-- `startIosNativeKoin()` initializes `DispatcherProvider` from
-  `:common-presentation` with `Dispatchers.Main` and, if Koin has not been
-  started yet, starts it with `iosNativePlatformModule`,
-  `commonPresentationModule`, and `iosDataModule`.
-  - `iosNativePlatformModule` provides a fresh `SavedStateHandle` factory and
-    binds the app-owned `IosNativeClipboardManager` to the presentation
-    `CustomClipboardManager` contract.
-  - `commonPresentationModule` registers the presentation ViewModels and
-    includes the shared `dataModule`.
-  - `iosDataModule` supplies the iOS `RoomDatabase.Builder<AppDatabase>` that
-    `dataModule` requires.
+- `startIosNative()` initializes `DispatcherProvider` from
+  `:common-presentation` with `Dispatchers.Main` and, if the Metro graph has
+  not been created yet, creates the app's `IosNativeGraph`.
+  - The graph aggregates contributed bindings from `:common-presentation`
+    (ViewModel factories and presentation singletons), `:data` (iOS database
+    builder and repository bindings), and this app's `IosNativeBindings`
+    (which binds the app-owned `IosNativeClipboardManager` to the presentation
+    `CustomClipboardManager` contract).
 - `createIosViewModelHost()` resolves one Main, Home, and Settings ViewModel
-  from the shared Koin graph and returns a `NativeViewModelHost`.
+  from the app's Metro graph and returns a `NativeViewModelHost`.
 
 Each bridge exposes only delegation:
 

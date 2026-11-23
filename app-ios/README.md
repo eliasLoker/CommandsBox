@@ -31,7 +31,7 @@ actually executed on macOS. Anything under "Not verified" was not run.
    links the static `ComposeApp.framework` produced by `:app-ios`.
 
 The app shows the shared Compose UI. `MainViewControllerKt.MainViewController()`
-initializes Koin, the shared theme, `MainNavHost` and the toast overlay.
+creates the Metro graph, the shared theme, `MainNavHost` and the toast overlay.
 `ContentView.swift` only hosts that Compose view controller; there is no
 separate SwiftUI implementation.
 

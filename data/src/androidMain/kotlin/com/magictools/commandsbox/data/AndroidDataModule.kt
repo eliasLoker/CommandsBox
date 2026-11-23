@@ -2,17 +2,26 @@ package com.magictools.commandsbox.data
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.magictools.commandsbox.data.internal.db.AppDatabase
-import org.koin.dsl.module
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 
-val androidDataModule = module {
-    single<RoomDatabase.Builder<AppDatabase>> {
-        val context: Context = get()
+@BindingContainer
+@ContributesTo(AppScope::class)
+object AndroidDataBindings {
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideDatabaseBuilder(context: Context): DatabaseBuilder {
         val dbFile = context.getDatabasePath("commandsbox.db")
-        Room.databaseBuilder<AppDatabase>(
-            context = context,
-            name = dbFile.absolutePath,
+        return DatabaseBuilder(
+            Room.databaseBuilder<AppDatabase>(
+                context = context,
+                name = dbFile.absolutePath,
+            )
         )
     }
 }

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -21,8 +22,8 @@ kotlin {
 
                 implementation(libs.compose.resources)
                 implementation(libs.compose.runtime)
-                implementation(libs.koin.core)
-                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.metrox.viewmodel)
+                implementation(libs.metrox.viewmodel.compose)
             }
         }
     }

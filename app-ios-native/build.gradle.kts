@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.moko.resources)
+    alias(libs.plugins.metro)
 }
 
 val commonResourcesDirectory = rootProject.layout.projectDirectory
@@ -298,7 +299,7 @@ kotlin {
                 implementation(libs.androidx.lifecycle.viewmodel.savedstate)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.compose.resources)
-                implementation(libs.koin.core)
+                implementation(libs.metrox.viewmodel)
             }
         }
     }

@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,25 +15,30 @@ import com.magictools.commandsBox.commonpresentation.ui.main.OnToastDismissed
 import com.magictools.commandsBox.commonui.customview.CommandsBoxToastView
 import com.magictools.commandsBox.commonui.navigation.MainNavHost
 import com.magictools.commandsBox.commonui.theme.CommandsBoxAppTheme
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 class MainActivity : ComponentActivity() {
-
-    private val viewModel by viewModel<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val appGraph = (application as CommandsBox).appGraph
         setContent {
-            CommandsBoxAppTheme {
-                val viewState = viewModel.viewState.collectAsState().value
-                Box(modifier = Modifier.fillMaxSize()) {
-                    MainNavHost()
-                    CommandsBoxToastView(
-                        modifier = Modifier.align(Alignment.TopCenter),
-                        state = viewState.toastState,
-                        onDismiss = { viewModel.onNewEvent(OnToastDismissed) }
-                    )
+            CompositionLocalProvider(
+                LocalMetroViewModelFactory provides appGraph.metroViewModelFactory
+            ) {
+                CommandsBoxAppTheme(themePreferences = appGraph.themePreferences) {
+                    val viewModel = metroViewModel<MainViewModel>()
+                    val viewState = viewModel.viewState.collectAsState().value
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        MainNavHost()
+                        CommandsBoxToastView(
+                            modifier = Modifier.align(Alignment.TopCenter),
+                            state = viewState.toastState,
+                            onDismiss = { viewModel.onNewEvent(OnToastDismissed) }
+                        )
+                    }
                 }
             }
         }

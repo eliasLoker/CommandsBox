@@ -123,18 +123,18 @@ import com.magictools.commandsbox.resources.ic_edit
 import com.magictools.commandsbox.resources.ic_settings
 import com.magictools.commandsbox.resources.settings_title
 import com.magictools.multimvi.collectActions
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun HomeScreen(
     onSettingsClicked: () -> Unit
 ) {
-    val viewModel = koinViewModel<HomeViewModel>()
+    val viewModel = metroViewModel<HomeViewModel>()
     val state = viewModel.viewState.collectAsState()
     viewModel.action.collectActions<HomeAction>(
         dismiss = {

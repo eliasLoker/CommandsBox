@@ -1,24 +1,15 @@
 package com.magictools.commandsbox.appandroid
 
 import android.app.Application
-import com.magictools.commandsBox.commonui.androidCommonUiModule
-import com.magictools.commandsBox.commonui.commonUiModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.GlobalContext.startKoin
+import dev.zacsweers.metro.createGraphFactory
 
 class CommandsBox : Application() {
 
+    lateinit var appGraph: AppGraph
+        private set
+
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            androidLogger()
-            androidContext(this@CommandsBox)
-            modules(
-                androidCommonUiModule,
-
-                commonUiModule,
-            )
-        }
+        appGraph = createGraphFactory<AppGraph.Factory>().create(this)
     }
 }

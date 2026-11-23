@@ -3,22 +3,31 @@ package com.magictools.commandsbox.data
 import com.magictools.commandsbox.data.internal.MainMapper
 import com.magictools.commandsbox.data.internal.MainRepositoryImpl
 import com.magictools.commandsbox.data.internal.ThemePreferencesImpl
-import com.magictools.commandsbox.data.internal.db.AppDatabase
 import com.magictools.commandsbox.data.internal.db.getRoomDatabase
 import com.russhwolf.settings.Settings
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.binds
-import org.koin.dsl.module
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 
-val dataModule = module {
+@BindingContainer
+@ContributesTo(AppScope::class)
+object DataBindings {
 
-    single<AppDatabase> { getRoomDatabase(get()) }
-    single { get<AppDatabase>().companionsDao() }
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideMainRepository(databaseBuilder: DatabaseBuilder): MainRepository {
+        val database = getRoomDatabase(databaseBuilder.roomBuilder)
+        return MainRepositoryImpl(database.companionsDao(), MainMapper())
+    }
 
-    single { Settings() }
-    singleOf(::ThemePreferencesImpl).binds(arrayOf(ThemePreferences::class))
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideSettings(): Settings = Settings()
 
-    factoryOf(::MainMapper)
-    single { MainRepositoryImpl(get(), get()) }.binds(arrayOf(MainRepository::class))
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideThemePreferences(settings: Settings): ThemePreferences =
+        ThemePreferencesImpl(settings)
 }

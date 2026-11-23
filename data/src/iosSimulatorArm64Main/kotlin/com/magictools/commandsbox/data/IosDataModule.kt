@@ -1,17 +1,25 @@
 package com.magictools.commandsbox.data
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.magictools.commandsbox.data.internal.db.AppDatabase
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import kotlinx.cinterop.ExperimentalForeignApi
-import org.koin.dsl.module
 import platform.Foundation.NSApplicationSupportDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
 @OptIn(ExperimentalForeignApi::class)
-val iosDataModule = module {
-    single<RoomDatabase.Builder<AppDatabase>> {
+@BindingContainer
+@ContributesTo(AppScope::class)
+object IosDataBindings {
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideDatabaseBuilder(): DatabaseBuilder {
         val appSupportDirectory = NSFileManager.defaultManager.URLForDirectory(
             directory = NSApplicationSupportDirectory,
             inDomain = NSUserDomainMask,
@@ -23,8 +31,10 @@ val iosDataModule = module {
             ?: error("Unable to resolve the iOS Application Support directory for the database.")
         val dbPath = dbFile.path
             ?: error("Unable to resolve the iOS database path.")
-        Room.databaseBuilder<AppDatabase>(
-            name = dbPath
+        return DatabaseBuilder(
+            Room.databaseBuilder<AppDatabase>(
+                name = dbPath
+            )
         )
     }
 }

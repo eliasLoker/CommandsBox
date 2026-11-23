@@ -1,7 +1,10 @@
 package com.magictools.commandsBox.commonpresentation.utils.stringprovider
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
 import org.jetbrains.compose.resources.StringResource
 
+@ContributesBinding(AppScope::class)
 class StringProviderImpl : StringProvider {
 
     override suspend fun getString(

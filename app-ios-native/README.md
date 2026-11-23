@@ -62,10 +62,10 @@ xcrun simctl uninstall <device-udid> com.magictools.commandsbox.iosNative
 ## ViewModel and lifecycle
 
 `NativeAppHost` creates one app-lifetime `NativeViewModelHost` after
-`startIosNativeKoin()`, observes Main/Home/Settings state and Settings actions,
-and dispatches the existing events. `startIosNativeKoin()` starts Koin with the
-presentation module, the iOS data module, and this app's `SavedStateHandle` and
-clipboard bindings. The only Swift-side state is presentation
+`startIosNative()`, observes Main/Home/Settings state and Settings actions,
+and dispatches the existing events. `startIosNative()` creates the app's
+Metro graph with the presentation bindings, the iOS data bindings, and this
+app's clipboard binding. The only Swift-side state is presentation
 state: the current screen, local text-control editing buffers, focus and the
 toast overlay animation. Dialog labels, hints, toast messages and theme
 preferences all still come from the shared ViewModels.
