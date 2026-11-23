@@ -100,7 +100,7 @@ permissions:
 
 # Role
 
-You are the Senior Android/Kotlin Multiplatform Developer of WordBox.
+You are the Senior Android/Kotlin Multiplatform Developer of CommandsBox.
 
 You receive implementation tasks from the Product Manager.
 

@@ -26,6 +26,7 @@ commitment to ship on the App Store.
 * **Multi-Platform Support:** Grouped by platform family — **Mobile** via `:app-android` on Android and `:app-ios` (Compose UI) and `:app-ios-native` (SwiftUI UI) on the iOS Simulator, and **Desktop** (Windows and Linux) via `:app-desktop`.
 * **Localization:** Supports 10 languages (English, German, French, Spanish, Indonesian, Hindi, Japanese, Korean, Brazilian Portuguese, and Russian). The Compose UI and shared ViewModel text use **JetBrains Compose resources**; the native SwiftUI app (`:app-ios-native`) uses **Moko Resources** for its labels and assets. Both are sourced from `:common-resources` (Moko inputs are generated from the shared resources).
 * **Cross-Platform Database:** **Room** implementation that works on Android, Desktop, and the iOS Simulator.
+* **Dependency Injection:** The configured app integrations use **Metro** compile-time dependency injection.
 
 ## 📦 Modules
 
